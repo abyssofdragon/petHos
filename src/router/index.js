@@ -1,5 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import hospitalGuide from './modules/hospitalGuide'
+import userManagement from './modules/userManagement'
+import testManagement from './modules/testManagement'
+import test from './modules/test'
+import caseManagement from './modules/caseManagement'
+import functionManagement from './modules/functionManagement'
+import studyManagement from '@/router/modules/studyManagement'
+import mycase from './modules/mycase'
 
 Vue.use(Router)
 
@@ -53,6 +61,63 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
+  },
+
+  {
+    path: '/hospitalGuide',
+    component: Layout,
+    redirect: '/hospitalGuide',
+    children: [
+      hospitalGuide
+    ]
+  },
+
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/functionManagement/personnelManagement',
+    name: 'Admin',
+    meta: {
+      title: '管理员',
+      icon: 'nested'
+    },
+    children: [
+      functionManagement,
+      testManagement,
+      caseManagement,
+      studyManagement
+    ]
+  },
+
+  {
+    path: '/superAdmin',
+    component: Layout,
+    redirect: '/superAdmin/userManagement/rootManagement',
+    name: 'SuperAdmin',
+    meta: {
+      title: '超级管理员',
+      icon: 'nested',
+      roles: ['user']
+    },
+    children: [
+      userManagement
+    ]
+  },
+
+  {
+    path: '/test',
+    component: Layout,
+    children: [
+      test
+    ]
+  },
+
+  {
+    path: '/case',
+    component: Layout,
+    children: [
+      mycase
+    ]
   }
 
   // {

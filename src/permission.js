@@ -26,7 +26,9 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
+      // 获取vuex里面name这个字段
+      // const hasGetUserInfo = store.getters.name
+      const hasGetUserInfo = '测试'
       if (hasGetUserInfo) {
         next()
       } else {

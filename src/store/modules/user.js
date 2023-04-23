@@ -35,10 +35,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ userName: username.trim(), password: password }).then(response => {
         const { data } = response
+        console.log(111,data)
+        localStorage.setItem('token', data.Authorization)
+        localStorage.setItem('role', 'admin')
         commit('SET_TOKEN', data.Authorization)
         setToken(data.Authorization)
         commit('SET_NAME', username)
-        commit('SET_AVATAR', "http://erkong.ybc365.com/7ffac20210331212345427.jpeg")
+        commit('SET_AVATAR', 'http://erkong.ybc365.com/7ffac20210331212345427.jpeg')
         resolve()
       }).catch(error => {
         reject(error)

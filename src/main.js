@@ -2,6 +2,16 @@ import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
+// 新增组件
+// https://vxetable.cn/v3/#/table/start/install
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
+Vue.use(VXETable)
+// http://v4.iviewui.com/docs/guide/install
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
+Vue.use(ViewUI)
+
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import locale from 'element-ui/lib/locale/lang/en' // lang i18n
@@ -34,6 +44,12 @@ if (process.env.NODE_ENV === 'production') {
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+
+// 给每个请求都拦截下来 添加请求的token信息
+// axios.interceptors.request.use(function (config) {
+//   config.headers.Authorization = 'Bearer ' + localStorage.getItem('token')
+//   return config
+// })
 
 new Vue({
   el: '#app',
