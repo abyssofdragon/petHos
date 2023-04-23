@@ -28,6 +28,9 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
+  // 3.关闭eslint校验
+  // lintOnSave: false,
+
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -36,7 +39,18 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    // 7.在vue.config.js里配置反向代理，解决接口跨域问题
+    proxy: {
+      // 配置跨域
+      '/api':{
+        target: "http://localhost:8084",
+        changeOrigin: true,
+        pathRewrite:{
+          '^/api':'/'
+        }
+      }
+    }
+    // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
