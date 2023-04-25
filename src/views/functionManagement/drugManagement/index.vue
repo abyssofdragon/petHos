@@ -161,7 +161,10 @@ export default {
       axios({
         method: 'get',
         url: 'http://localhost:8084/drug/all',
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.result = res.data.data
@@ -175,7 +178,10 @@ export default {
         method: 'put',
         url: 'http://localhost:8084/drug/update',
         timeout: 30000,
-        data
+        data,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.getDrugAll()
@@ -187,7 +193,10 @@ export default {
         method: 'post',
         url: 'http://localhost:8084/drug/add',
         timeout: 30000,
-        data
+        data,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.getDrugAll()
@@ -197,7 +206,10 @@ export default {
       axios({
         method: 'delete',
         url: 'http://localhost:8084/drug/delete/' + row.drugId,
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.getDrugAll()
@@ -207,7 +219,10 @@ export default {
       axios({
         method: 'get',
         url: 'http://localhost:8084/drug/searchByName/?drugName=' + this.filterName,
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.result = res.data.data

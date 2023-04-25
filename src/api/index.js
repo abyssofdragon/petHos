@@ -9,3 +9,14 @@ export function login(params) {
     params
   })
 }
+
+export function getUserInfo(data) {
+  return request({
+    url: '/user/me',
+    method: 'post',
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token')
+    },
+    data
+  })
+}

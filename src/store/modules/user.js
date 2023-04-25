@@ -1,5 +1,5 @@
-import { logout, getInfo } from '@/api/user'
-import { login } from '@/api'
+// import { logout } from '@/api/user'
+import { login, getUserInfo } from '@/api'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -35,12 +35,12 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ userName: username.trim(), password: password }).then(response => {
         const { data } = response
-        console.log(111,data)
+        console.log(111, data)
         localStorage.setItem('token', data.Authorization)
         localStorage.setItem('role', 'admin')
         commit('SET_TOKEN', data.Authorization)
         setToken(data.Authorization)
-        commit('SET_NAME', username)
+        // commit('SET_NAME', username)
         commit('SET_AVATAR', 'http://erkong.ybc365.com/7ffac20210331212345427.jpeg')
         resolve()
       }).catch(error => {
@@ -52,17 +52,17 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getUserInfo().then(response => {
         const { data } = response
-
+        console.log(111, response)
         if (!data) {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const { userName, authority } = data
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        commit('SET_NAME', userName)
+        commit('SET_AUTHORITY', authority)
         resolve(data)
       }).catch(error => {
         reject(error)

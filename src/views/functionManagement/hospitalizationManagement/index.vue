@@ -146,7 +146,10 @@ export default {
       axios({
         method: 'get',
         url: 'http://localhost:8084/hospitalization/all',
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.result = res.data.data
@@ -160,7 +163,10 @@ export default {
         method: 'put',
         url: 'http://localhost:8084/hospitalization/update',
         timeout: 30000,
-        data
+        data,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.getAll()
@@ -172,7 +178,10 @@ export default {
         method: 'post',
         url: 'http://localhost:8084/hospitalization/add',
         timeout: 30000,
-        data
+        data,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.getAll()
@@ -182,7 +191,10 @@ export default {
       axios({
         method: 'delete',
         url: 'http://localhost:8084/hospitalization/delete/' + row.hospitalizationId,
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.getAll()
@@ -192,7 +204,10 @@ export default {
       axios({
         method: 'get',
         url: 'http://localhost:8084/hospitalization/searchByName/?patientName=' + this.filterName,
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.result = res.data.data
