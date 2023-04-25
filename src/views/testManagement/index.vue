@@ -227,7 +227,10 @@ export default {
       axios({
         method: 'get',
         url: 'http://localhost:8084/question/all',
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        }
       }).then(res => {
         console.log(res)
         this.problemList = res.data.data
@@ -239,6 +242,9 @@ export default {
         method: 'get',
         url: 'http://localhost:8084/question/searchByContent',
         timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
         params: {
           content: this.problemSearch
         }
@@ -253,6 +259,9 @@ export default {
         method: 'get',
         url: 'http://localhost:8084/question/searchByCategory',
         timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
         params: {
           category: this.categorySearch
         }
@@ -278,6 +287,9 @@ export default {
         method: 'put',
         url: 'http://localhost:8084/question/update',
         timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
         data
       }).then(res => {
         console.log(res)
@@ -293,7 +305,10 @@ export default {
       axios({
         method: 'delete',
         url: 'http://localhost:8084/question/delete/' + this.index,
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        }
       }).then(res => {
         console.log(res)
         this.getAllProblem()
@@ -309,6 +324,9 @@ export default {
         method: 'post',
         url: 'http://localhost:8084/question/add',
         timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
         data
       }).then(res => {
         console.log(res)

@@ -6,8 +6,7 @@ import testManagement from './modules/testManagement'
 import test from './modules/test'
 import caseManagement from './modules/caseManagement'
 import functionManagement from './modules/functionManagement'
-import studyManagement from '@/router/modules/studyManagement'
-import mycase from './modules/mycase'
+import study from './modules/study'
 
 Vue.use(Router)
 
@@ -84,8 +83,7 @@ export const constantRoutes = [
     children: [
       functionManagement,
       testManagement,
-      caseManagement,
-      studyManagement
+      caseManagement
     ]
   },
 
@@ -113,10 +111,10 @@ export const constantRoutes = [
   },
 
   {
-    path: '/case',
+    path: '/study',
     component: Layout,
     children: [
-      mycase
+      study
     ]
   }
 
