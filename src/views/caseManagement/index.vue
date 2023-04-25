@@ -213,21 +213,21 @@
     <div v-if="showCase" style="margin: 40px">
       <el-descriptions :column="4" border>
         <template slot="title">
-          {{ this.mycase.name }}
+          {{ mycase.name }}
         </template>
-        <el-descriptions-item label="主人">{{ this.mycase.owner }}</el-descriptions-item>
-        <el-descriptions-item label="地址" :span="2">{{ this.mycase.address }}</el-descriptions-item>
-        <el-descriptions-item label="电话">{{ this.mycase.phone }}</el-descriptions-item>
-        <el-descriptions-item label="宠物名">{{ this.mycase.petName }}</el-descriptions-item>
-        <el-descriptions-item label="种类">{{ this.mycase.type }}</el-descriptions-item>
-        <el-descriptions-item label="品种">{{ this.mycase.variety }}</el-descriptions-item>
-        <el-descriptions-item label="病种">{{ this.mycase.category }}</el-descriptions-item>
-        <el-descriptions-item label="年龄">{{ this.mycase.age }}</el-descriptions-item>
-        <el-descriptions-item label="性别">{{ this.mycase.sex }}</el-descriptions-item>
-        <el-descriptions-item label="免疫">{{ this.mycase.immunity }}</el-descriptions-item>
-        <el-descriptions-item label="体重">{{ this.mycase.weight }}</el-descriptions-item>
+        <el-descriptions-item label="主人">{{ mycase.owner }}</el-descriptions-item>
+        <el-descriptions-item label="地址" :span="2">{{ mycase.address }}</el-descriptions-item>
+        <el-descriptions-item label="电话">{{ mycase.phone }}</el-descriptions-item>
+        <el-descriptions-item label="宠物名">{{ mycase.petName }}</el-descriptions-item>
+        <el-descriptions-item label="种类">{{ mycase.type }}</el-descriptions-item>
+        <el-descriptions-item label="品种">{{ mycase.variety }}</el-descriptions-item>
+        <el-descriptions-item label="病种">{{ mycase.category }}</el-descriptions-item>
+        <el-descriptions-item label="年龄">{{ mycase.age }}</el-descriptions-item>
+        <el-descriptions-item label="性别">{{ mycase.sex }}</el-descriptions-item>
+        <el-descriptions-item label="免疫">{{ mycase.immunity }}</el-descriptions-item>
+        <el-descriptions-item label="体重">{{ mycase.weight }}</el-descriptions-item>
         <el-descriptions-item label="接诊状态" :span="16">
-          <div>{{ this.mycase.state }}</div>
+          <div>{{ mycase.state }}</div>
           <div v-for="(item, index) in files.state.imageUrls" :key="index" style="display: inline-block">
             <div :class="{ selected: index == files.state.selectedImg }" @click="changeListS(index)">
               <img
@@ -239,7 +239,7 @@
           </div>
           <br>
           <div>
-            <xg-player :url="this.files.state.videoUrl" />
+            <xg-player :url="files.state.videoUrl" />
           </div>
           <br>
           <el-upload
@@ -274,7 +274,7 @@
           </el-upload>
         </el-descriptions-item>
         <el-descriptions-item label="诊疗过程和方法" :span="16">
-          <div>{{ this.mycase.diagnoseProcess }}</div>
+          <div>{{ mycase.diagnoseProcess }}</div>
           <div v-for="(item, index) in files.diagnoseProcess.imageUrls" :key="index" style="display: inline-block">
             <div :class="{ selected: index == files.diagnoseProcess.selectedImg }" @click="changeListD(index)">
               <img
@@ -320,7 +320,7 @@
           <!--          </el-upload>-->
         </el-descriptions-item>
         <el-descriptions-item label="诊断结果" :span="16">
-          <div>{{ this.mycase.result }}</div>
+          <div>{{ mycase.result }}</div>
           <div v-for="(item, index) in files.result.imageUrls" :key="index" style="display: inline-block">
             <div :class="{ selected: index == files.result.selectedImg }" @click="changeListR(index)">
               <img
@@ -366,7 +366,7 @@
           <!--          </el-upload>-->
         </el-descriptions-item>
         <el-descriptions-item label="治疗方案" :span="16">
-          <div>{{ this.mycase.treatment }}</div>
+          <div>{{ mycase.treatment }}</div>
           <div v-for="(item, index) in files.treatment.imageUrls" :key="index" style="display: inline-block">
             <div :class="{ selected: index == files.treatment.selectedImg }" @click="changeListT(index)">
               <img

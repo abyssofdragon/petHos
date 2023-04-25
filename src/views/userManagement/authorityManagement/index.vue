@@ -135,7 +135,10 @@ export default {
       axios({
         method: 'get',
         url: 'http://localhost:8084/user/getAll',
-        timeout: 30000
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
         this.result = res.data

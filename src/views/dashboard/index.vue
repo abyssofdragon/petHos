@@ -1,32 +1,32 @@
 <template>
   <div class="dashboard-container">
     <Row :gutter="16">
-        <Col span="6">
-            <Card>
-                <p slot="title">用户名</p>
-                <p>{{ result.userName }}</p>
-            </Card>
-        </Col>
-        <Col span="6">
-            <Card>
-                <p slot="title">身份</p>
-                <p v-if="result.authority==1">实习生</p>
-                <p v-if="result.authority==3">普通管理员</p>
-                <p v-if="result.authority==5">超级管理员</p>
-            </Card>
-        </Col>
-        <Col span="6">
-            <Card>
-                <p slot="title">性别</p>
-                <p>{{ result.gender }}</p>
-            </Card>
-        </Col>
-        <Col span="6">
-            <Card>
-                <p slot="title">年龄</p>
-                <p>{{ result.age }}</p>
-            </Card>
-        </Col>
+      <Col span="6">
+        <Card>
+          <p slot="title">用户名</p>
+          <p>{{ result.userName }}</p>
+        </Card>
+      </Col>
+      <Col span="6">
+        <Card>
+          <p slot="title">身份</p>
+          <p v-if="result.authority==1">实习生</p>
+          <p v-if="result.authority==3">普通管理员</p>
+          <p v-if="result.authority==5">超级管理员</p>
+        </Card>
+      </Col>
+      <Col span="6">
+        <Card>
+          <p slot="title">性别</p>
+          <p>{{ result.gender }}</p>
+        </Card>
+      </Col>
+      <Col span="6">
+        <Card>
+          <p slot="title">年龄</p>
+          <p>{{ result.age }}</p>
+        </Card>
+      </Col>
     </Row>
     <!-- <div class="dashboard-text">name: {{ result.userName }}</div> -->
   </div>

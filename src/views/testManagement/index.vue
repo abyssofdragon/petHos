@@ -229,7 +229,7 @@ export default {
         url: 'http://localhost:8084/question/all',
         timeout: 30000,
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       }).then(res => {
         console.log(res)
@@ -243,7 +243,7 @@ export default {
         url: 'http://localhost:8084/question/searchByContent',
         timeout: 30000,
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         params: {
           content: this.problemSearch
@@ -260,7 +260,7 @@ export default {
         url: 'http://localhost:8084/question/searchByCategory',
         timeout: 30000,
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         params: {
           category: this.categorySearch
@@ -288,7 +288,7 @@ export default {
         url: 'http://localhost:8084/question/update',
         timeout: 30000,
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         data
       }).then(res => {
@@ -307,7 +307,7 @@ export default {
         url: 'http://localhost:8084/question/delete/' + this.index,
         timeout: 30000,
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       }).then(res => {
         console.log(res)
@@ -325,7 +325,7 @@ export default {
         url: 'http://localhost:8084/question/add',
         timeout: 30000,
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         data
       }).then(res => {
