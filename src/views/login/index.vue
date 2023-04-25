@@ -41,7 +41,8 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:30%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button type="primary" style="width:30%;margin-bottom:30px;float: right" @click="registerDialog = true">注册</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -49,11 +50,36 @@
       </div>
 
     </el-form>
+    <el-dialog
+      title="注册用户"
+      :visible.sync="registerDialog"
+      width="30%"
+    >
+      <el-form ref="form" :model="userInfo" label-width="80px" class="registerD">
+        <el-form-item style="color: black" label="用户名">
+          <el-input style="color: black" v-model="userInfo.userName" />
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="userInfo.password" show-password />
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-input v-model="userInfo.gender" />
+        </el-form-item>
+        <el-form-item label="年龄">
+          <el-input v-model="userInfo.age" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleRegister">注册</el-button>
+        <el-button type="primary" @click="registerDialog = false">取消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 // import { validUsername } from '@/utils/validate'
+import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -83,7 +109,9 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      registerDialog: false,
+      userInfo: { userName: '', password: '', gender: '', age: '' }
     }
   },
   watch: {
@@ -120,6 +148,24 @@ export default {
           return false
         }
       })
+    },
+    handleRegister() {
+      axios({
+        method: 'post',
+        url: 'http://localhost:8084/user/register',
+        timeout: 30000,
+        params: {
+          userName: this.userInfo.userName,
+          password: this.userInfo.password,
+          gender: this.userInfo.gender,
+          age: this.userInfo.age
+        }
+      }).then(res => {
+        console.log(res)
+      })
+
+      this.userInfo = { userName: '', password: '', gender: '', age: '' }
+      this.registerDialog = false
     }
   }
 }
