@@ -6,7 +6,6 @@ import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 import axios from 'axios'
-import { filterAsyncRoutes } from '@/router/asyncRouter'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
