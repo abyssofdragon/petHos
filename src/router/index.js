@@ -61,16 +61,22 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-
   {
-    path: '/hospitalGuide',
+    path: '/intern',
     component: Layout,
-    redirect: '/hospitalGuide',
+    redirect: '/intern/hospitalGuide',
+    name: 'Intern',
+    meta: {
+      title: '实习生',
+      icon: 'nested',
+      roles: ['intern', 'admin', 'superAdmin']
+    },
     children: [
-      hospitalGuide
+      hospitalGuide,
+      test,
+      study
     ]
   },
-
   {
     path: '/admin',
     component: Layout,
@@ -78,7 +84,8 @@ export const constantRoutes = [
     name: 'Admin',
     meta: {
       title: '管理员',
-      icon: 'nested'
+      icon: 'nested',
+      roles: ['admin', 'superAdmin']
     },
     children: [
       functionManagement,
@@ -95,26 +102,10 @@ export const constantRoutes = [
     meta: {
       title: '超级管理员',
       icon: 'nested',
-      roles: ['user']
+      roles: ['superAdmin']
     },
     children: [
       userManagement
-    ]
-  },
-
-  {
-    path: '/test',
-    component: Layout,
-    children: [
-      test
-    ]
-  },
-
-  {
-    path: '/study',
-    component: Layout,
-    children: [
-      study
     ]
   }
 
