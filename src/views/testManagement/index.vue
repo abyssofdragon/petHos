@@ -220,6 +220,10 @@ export default {
     }
   },
   created() {
+    if (localStorage.getItem('role') === 'user') {
+      this.$router.push({ path: '/dashboard' })
+      alert('您的用户权限不足')
+    }
     this.getAllProblem()
   },
   methods: {

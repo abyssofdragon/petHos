@@ -94,6 +94,12 @@ export default {
       caseSearch: ''
     }
   },
+  created() {
+    if (localStorage.getItem('role') === 'user') {
+      this.$router.push({ path: '/dashboard' })
+      alert('您的用户权限不足')
+    }
+  },
   methods: {
     handleSelectionChange(val) {
       this.multipleSelection = val

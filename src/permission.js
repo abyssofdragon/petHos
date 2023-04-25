@@ -1,10 +1,12 @@
-import router from './router'
+import router, { changeRouter, myAddRouter } from './router'
 import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import axios from 'axios'
+import { filterAsyncRoutes } from '@/router/asyncRouter'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -27,23 +29,34 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       // 获取vuex里面name这个字段
-      // const hasGetUserInfo = store.getters.name
-      const hasGetUserInfo = '测试'
-      if (hasGetUserInfo) {
+      const hasGetUserInfo = localStorage.getItem('role')
+      // const hasGetUserInfo = '测试'
+      console.log('hasuser: ' + hasGetUserInfo)
+      if (hasGetUserInfo !== 'false') {
         next()
       } else {
-        try {
-          // get user info
-          await store.dispatch('user/getInfo')
-
-          next()
-        } catch (error) {
-          // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
-          NProgress.done()
-        }
+        axios({
+          method: 'get',
+          url: 'http://localhost:8084/user/me',
+          timeout: 30000,
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+        }).then(res => {
+          console.log(res.data.data.authority)
+          let role = ''
+          if (res.data.data.authority === 1) {
+            role = 'user'
+          } else if (res.data.data.authority === 3) {
+            role = 'admin'
+          } else if (res.data.data.authority === 5) {
+            role = 'superadmin'
+          } else {
+            alert('登录出错')
+          }
+          localStorage.setItem('role', role)
+          next({ ...to, replace: true })
+        })
       }
     }
   } else {
