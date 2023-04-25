@@ -155,6 +155,9 @@ export default {
         method: 'post',
         url: 'http://localhost:8084/question/generate',
         timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
         data
       }).then(res => {
         oo = res.data.data
@@ -191,7 +194,7 @@ export default {
       this.showExam = false
     },
     onSubmit() {
-      const data = []
+      let data = []
       let result
       let score = 0
       for (let i = 1; i <= 20; i++) {
@@ -207,6 +210,9 @@ export default {
         method: 'post',
         url: 'http://localhost:8084/question/score',
         timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
         data
       }).then(res => {
         console.log(res)
