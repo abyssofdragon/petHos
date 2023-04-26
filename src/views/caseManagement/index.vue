@@ -627,6 +627,7 @@ export default {
       }).then(res => {
         console.log(res)
         this.getAllCase()
+        this.$message.success('病例删除成功')
       })
       this.caseDialog = false
     },
@@ -646,6 +647,7 @@ export default {
           }).then(res => {
             console.log(res)
             this.getAllCase()
+            this.$message.success('病例修改成功')
           })
           this.modifyCase = { patientId: 0, owner: '', address: '', phone: '', petName: '', type: '', variety: '', age: '', sex: '', immunity: '',
             weight: '', category: '', name: '', state: '', diagnoseProcess: '', result: '', treatment: '' }
@@ -669,6 +671,7 @@ export default {
             data
           }).then(res => {
             console.log(res)
+            this.$message.success('病例增加成功')
             this.getAllCase()
           })
           this.addCase = { patientId: 0, owner: '', address: '', phone: '', petName: '', type: '', variety: '', age: '', sex: '', immunity: '',
@@ -790,9 +793,8 @@ export default {
         alert('上传文件出错')
         return
       }
-      console.log(uploadImgs)
       if (uploadImgs.length === 0) {
-        alert('请先上传图片')
+        this.$message.error('请先上传图片')
         return
       }
       for (let i = 0; i < uploadImgs.length; i++) {
@@ -839,7 +841,7 @@ export default {
           alert('上传文件出错')
           return
         }
-        alert('图片上传成功')
+        this.$message.success(uploadImgs.length + '张图片上传成功')
         this.getImg()
       })
     },
@@ -848,7 +850,6 @@ export default {
     },
     beforeUploadImg(file) {
       const FILE_NAME = file.name
-      console.log(FILE_NAME)
       if (FILE_NAME.substring(FILE_NAME.lastIndexOf('.')) !== '.jpg' && FILE_NAME.substring(FILE_NAME.lastIndexOf('.')) !== '.png') {
         this.$message.warning('仅支持.jpg和.png文件')
         return false
@@ -862,7 +863,6 @@ export default {
     },
     beforeUploadVdo(file) {
       const FILE_NAME = file.name
-      console.log(FILE_NAME)
       if (FILE_NAME.substring(FILE_NAME.lastIndexOf('.')) !== '.mp4') {
         this.$message.warning('仅支持.mp4文件')
         return false
@@ -901,7 +901,7 @@ export default {
         this.files.state.uploadImgs.push(file.raw)
         fileList = this.files.state.uploadImgList
       } else {
-        this.$refs.stateUpload.clearFiles()
+        this.$refs.stateUpload.fileList.splice(this.$refs.stateUpload.fileList.lastIndex)
       }
     },
     handleChangeD(file, fileList) {
@@ -915,7 +915,7 @@ export default {
         this.files.diagnoseProcess.uploadImgs.push(file.raw)
         fileList = this.files.diagnoseProcess.uploadImgList
       } else {
-        this.$refs.diaUpload.clearFiles()
+        this.$refs.diaUpload.fileList.splice(this.$refs.diaUpload.fileList.lastIndex)
       }
     },
     handleChangeR(file, fileList) {
@@ -929,7 +929,7 @@ export default {
         this.files.result.uploadImgs.push(file.raw)
         fileList = this.files.result.uploadImgList
       } else {
-        this.$refs.resultUpload.clearFiles()
+        this.$refs.resultUpload.fileList.splice(this.$refs.resultUpload.fileList.lastIndex)
       }
     },
     handleChangeT(file, fileList) {
@@ -943,7 +943,7 @@ export default {
         this.files.treatment.uploadImgs.push(file.raw)
         fileList = this.files.treatment.uploadImgList
       } else {
-        this.$refs.treatUpload.clearFiles()
+        this.$refs.treatUpload.fileList.splice(this.$refs.treatUpload.fileList.lastIndex)
       }
     },
     handleChangeSS(file, fileList) {
@@ -955,7 +955,7 @@ export default {
     },
     deleteImgS() {
       if (this.files.state.selectedImg === null) {
-        alert('请先选择图片')
+        this.$message.error('请先选择图片')
         return
       }
       console.log(this.files.state.originImgUrls[this.files.state.selectedImg])
@@ -976,13 +976,15 @@ export default {
           this.files.state.imageUrls.splice(this.files.state.selectedImg, 1)
           this.files.state.selectedImg = null
           this.getImg()
+          this.$message.success('图片删除成功')
+        } else {
+          this.$message.error(res.data.msg)
         }
-        alert(res.data.msg)
       })
     },
     deleteImgD() {
       if (this.files.diagnoseProcess.selectedImg === null) {
-        alert('请先选择图片')
+        this.$message.error('请先选择图片')
         return
       }
       axios({
@@ -1002,13 +1004,15 @@ export default {
           this.files.diagnoseProcess.imageUrls.splice(this.files.diagnoseProcess.selectedImg, 1)
           this.files.diagnoseProcess.selectedImg = null
           this.getImg()
+          this.$message.success('图片删除成功')
+        } else {
+          this.$message.error(res.data.msg)
         }
-        alert(res.data.msg)
       })
     },
     deleteImgR() {
       if (this.files.result.selectedImg === null) {
-        alert('请先选择图片')
+        this.$message.error('请先选择图片')
         return
       }
       console.log(this.files.result.originImgUrls)
@@ -1029,13 +1033,15 @@ export default {
           this.files.result.imageUrls.splice(this.files.result.selectedImg, 1)
           this.files.result.selectedImg = null
           this.getImg()
+          this.$message.success('图片删除成功')
+        } else {
+          this.$message.error(res.data.msg)
         }
-        alert(res.data.msg)
       })
     },
     deleteImgT() {
       if (this.files.treatment.selectedImg === null) {
-        alert('请先选择图片')
+        this.$message.error('请先选择图片')
         return
       }
       axios({
@@ -1055,8 +1061,10 @@ export default {
           this.files.treatment.imageUrls.splice(this.files.treatment.selectedImg, 1)
           this.files.treatment.selectedImg = null
           this.getImg()
+          this.$message.success('图片删除成功')
+        } else {
+          this.$message.error(res.data.msg)
         }
-        alert(res.data.msg)
       })
     },
     changeListS(index) {
@@ -1104,7 +1112,7 @@ export default {
       const FormDatas = new FormData()
       const uploadVdo = this.files.state.uploadVdo
       if (uploadVdo === null) {
-        alert('请先上传视频！')
+        this.$message.error('请先上传视频！')
         return
       }
       FormDatas.append('files', uploadVdo)
@@ -1124,9 +1132,9 @@ export default {
         if (res.data[0].code === 200) {
           this.files.state.uploadVdo = null
           this.getVdo()
-          alert('视频上传成功')
+          this.$message.success('视频上传成功')
         } else {
-          alert(res.data[0].msg)
+          this.$message.error(res.data[0].msg)
         }
         this.isShowJinDuTiao = false
         this.curPercentage = 0
@@ -1165,7 +1173,7 @@ export default {
     },
     deleteVdoS() {
       if (this.files.state.orignUrl === null) {
-        alert('视频不存在，无法删除！')
+        this.$message.error('视频不存在，无法删除！')
         return
       }
       axios({
@@ -1186,8 +1194,10 @@ export default {
             path: '/admin/supplierAllBack',
             name: 'supplierAllBack'
           })
+          this.$message.success('视频删除成功')
+        } else {
+          this.$message.error(res.data.msg)
         }
-        alert(res.data.msg)
       })
     }
   }

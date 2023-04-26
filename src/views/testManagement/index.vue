@@ -106,8 +106,8 @@
       :visible.sync="modifyDialog"
       width="30%"
     >
-      <el-form ref="form" :model="problem" label-width="80px">
-        <el-form-item label="病种">
+      <el-form ref="modifyform" :model="problem" :rules="rules" label-width="80px">
+        <el-form-item label="病种" prop="category">
           <el-select v-model="problem.category" placeholder="请选择病种" style="width: 100%;">
             <el-option
               v-for="item in categories"
@@ -118,22 +118,22 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="题目">
+        <el-form-item label="题目" prop="content">
           <el-input v-model="problem.content" />
         </el-form-item>
-        <el-form-item label="选项A">
+        <el-form-item label="选项A" prop="optionA">
           <el-input v-model="problem.optionA" />
         </el-form-item>
-        <el-form-item label="选项B">
+        <el-form-item label="选项B" prop="optionB">
           <el-input v-model="problem.optionB" />
         </el-form-item>
-        <el-form-item label="选项C">
+        <el-form-item label="选项C" prop="optionC">
           <el-input v-model="problem.optionC" />
         </el-form-item>
-        <el-form-item label="选项D">
+        <el-form-item label="选项D" prop="optionD">
           <el-input v-model="problem.optionD" />
         </el-form-item>
-        <el-form-item label="答案">
+        <el-form-item label="答案" prop="answer">
           <el-select v-model="problem.answer" placeholder="请选择答案" style="width: 100%;">
             <el-option
               v-for="item in options"
@@ -156,8 +156,8 @@
       :visible.sync="addDialog"
       width="30%"
     >
-      <el-form ref="form" :model="problem" label-width="80px">
-        <el-form-item label="病种">
+      <el-form ref="addform" :model="problem" :rules="rules" label-width="80px">
+        <el-form-item label="病种" prop="category">
           <el-select v-model="problem.category" placeholder="请选择病种" style="width: 100%;">
             <el-option
               v-for="item in categories"
@@ -168,22 +168,22 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="题目">
+        <el-form-item label="题目" prop="content">
           <el-input v-model="problem.content" />
         </el-form-item>
-        <el-form-item label="选项A">
+        <el-form-item label="选项A" prop="optionA">
           <el-input v-model="problem.optionA" />
         </el-form-item>
-        <el-form-item label="选项B">
+        <el-form-item label="选项B" prop="optionB">
           <el-input v-model="problem.optionB" />
         </el-form-item>
-        <el-form-item label="选项C">
+        <el-form-item label="选项C" prop="optionC">
           <el-input v-model="problem.optionC" />
         </el-form-item>
-        <el-form-item label="选项D">
+        <el-form-item label="选项D" prop="optionD">
           <el-input v-model="problem.optionD" />
         </el-form-item>
-        <el-form-item label="答案">
+        <el-form-item label="答案" prop="answer">
           <el-select v-model="problem.answer" placeholder="请选择答案" style="width: 100%;">
             <el-option
               v-for="item in options"
@@ -273,6 +273,29 @@ export default {
           label: 'D'
         }
       ],
+      rules: {
+        category: [
+          { required: true, message: '请选择病种', trigger: 'blur' }
+        ],
+        content: [
+          { required: true, message: '请输入题目', trigger: 'blur' }
+        ],
+        optionA: [
+          { required: true, message: '请输入选项A', trigger: 'blur' }
+        ],
+        optionB: [
+          { required: true, message: '请输入选项B', trigger: 'blur' }
+        ],
+        optionC: [
+          { required: true, message: '请输入选项C', trigger: 'blur' }
+        ],
+        optionD: [
+          { required: true, message: '请输入选项D', trigger: 'blur' }
+        ],
+        answer: [
+          { required: true, message: '请选择答案', trigger: 'blur' }
+        ]
+      },
       currentPage: 1,
       pagesize: 10,
       total: 10,
@@ -353,21 +376,28 @@ export default {
     modifyProblem() {
       const data = this.problem
       // this.problemList[this.index] = this.problem
-      axios({
-        method: 'put',
-        url: 'http://localhost:8084/question/update',
-        timeout: 30000,
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-        },
-        data
-      }).then(res => {
-        console.log(res)
-        this.getAllProblem()
-      })
+      this.$refs['modifyform'].validate((valid) => {
+        if (valid) {
+          axios({
+            method: 'put',
+            url: 'http://localhost:8084/question/update',
+            timeout: 30000,
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            data
+          }).then(res => {
+            console.log(res)
+            this.getAllProblem()
+            this.$message.success('试题修改成功')
+          })
 
-      this.problem = { questionId: 0, category: '', content: '', options: '', answer: '', score: 0 }
-      this.modifyDialog = false
+          this.problem = { questionId: 0, category: '', content: '', options: '', answer: '', score: 0 }
+          this.modifyDialog = false
+        } else {
+          console.log('error submit!!')
+        }
+      })
     },
     deleteProblem() {
       // console.log(this.index)
@@ -390,21 +420,28 @@ export default {
       // this.problem.id = this.problemList[this.problemList.length - 1].id + 1
       // this.problemList.push(this.problem)
       const data = this.problem
-      axios({
-        method: 'post',
-        url: 'http://localhost:8084/question/add',
-        timeout: 30000,
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-        },
-        data
-      }).then(res => {
-        console.log(res)
-        this.getAllProblem()
-      })
+      this.$refs['addform'].validate((valid) => {
+        if (valid) {
+          axios({
+            method: 'post',
+            url: 'http://localhost:8084/question/add',
+            timeout: 30000,
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            data
+          }).then(res => {
+            console.log(res)
+            this.getAllProblem()
+            this.$message.success('试题添加成功')
+          })
 
-      this.problem = { questionId: 0, category: '', content: '', options: '', answer: '', score: 0 }
-      this.addDialog = false
+          this.problem = { questionId: 0, category: '', content: '', options: '', answer: '', score: 0 }
+          this.addDialog = false
+        } else {
+          console.log('error submit!!')
+        }
+      })
     },
     filterType(value, row) {
       return row.category === value
