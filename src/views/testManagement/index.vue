@@ -6,7 +6,7 @@
 
     <div style="margin: 20px">
       <div>
-        <el-button type="success" @click="addDialog = true">增加试题</el-button>
+        <el-button type="success" @click="addD">增加试题</el-button>
         <span style="float: right">
           <el-input
             v-model="categorySearch"
@@ -41,9 +41,9 @@
           prop="category"
           label="病种"
           width="180"
-          :filters="categoryFilter"
-          :filter-method="filterType"
         />
+<!--          :filters="categoryFilter"-->
+<!--          :filter-method="filterType"-->
 
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -108,7 +108,15 @@
     >
       <el-form ref="form" :model="problem" label-width="80px">
         <el-form-item label="病种">
-          <el-input v-model="problem.category" />
+          <el-select v-model="problem.category" placeholder="请选择病种" style="width: 100%;">
+            <el-option
+              v-for="item in categories"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="myoption">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="题目">
           <el-input v-model="problem.content" />
@@ -126,11 +134,16 @@
           <el-input v-model="problem.optionD" />
         </el-form-item>
         <el-form-item label="答案">
-          <el-input v-model="problem.answer" />
+          <el-select v-model="problem.answer" placeholder="请选择答案" style="width: 100%;">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="myoption">
+            </el-option>
+          </el-select>
         </el-form-item>
-        <!--        <el-form-item label="分值">-->
-        <!--          <el-input v-model="problem.score"></el-input>-->
-        <!--        </el-form-item>-->
         <el-form-item>
           <el-button type="primary" @click="modifyProblem">立即修改</el-button>
           <el-button @click="modifyDialog = false">取消</el-button>
@@ -145,7 +158,15 @@
     >
       <el-form ref="form" :model="problem" label-width="80px">
         <el-form-item label="病种">
-          <el-input v-model="problem.category" />
+          <el-select v-model="problem.category" placeholder="请选择病种" style="width: 100%;">
+            <el-option
+              v-for="item in categories"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="myoption">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="题目">
           <el-input v-model="problem.content" />
@@ -163,11 +184,16 @@
           <el-input v-model="problem.optionD" />
         </el-form-item>
         <el-form-item label="答案">
-          <el-input v-model="problem.answer" />
+          <el-select v-model="problem.answer" placeholder="请选择答案" style="width: 100%;">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="myoption">
+            </el-option>
+          </el-select>
         </el-form-item>
-        <!--        <el-form-item label="分值">-->
-        <!--          <el-input v-model="problem.score"></el-input>-->
-        <!--        </el-form-item>-->
         <el-form-item>
           <el-button type="primary" @click="addProblem">立即增加</el-button>
           <el-button @click="addDialog = false">取消</el-button>
@@ -207,6 +233,46 @@ export default {
       ],
       categoryFilter: [{ text: '犬瘟热', value: '犬瘟热' }, { text: '猫感冒', value: '猫感冒' }, { text: '鹦鹉热', value: '鹦鹉热' },
         { text: '猫病毒性鼻气管炎', value: '猫病毒性鼻气管炎' }, { text: '猫泛白细胞减少症', value: '猫泛白细胞减少症' }],
+      categories: [
+        {
+          value: '犬瘟热',
+          label: '犬瘟热'
+        },
+        {
+          value: '猫感冒',
+          label: '猫感冒'
+        },
+        {
+          value: '鹦鹉热',
+          label: '鹦鹉热'
+        },
+        {
+          value: '猫病毒性鼻气管炎',
+          label: '猫病毒性鼻气管炎'
+        },
+        {
+          value: '猫泛白细胞减少症',
+          label: '猫泛白细胞减少症'
+        }
+      ],
+      options: [
+        {
+          value: 'A',
+          label: 'A'
+        },
+        {
+          value: 'B',
+          label: 'B'
+        },
+        {
+          value: 'C',
+          label: 'C'
+        },
+        {
+          value: 'D',
+          label: 'D'
+        }
+      ],
       currentPage: 1,
       pagesize: 10,
       total: 10,
@@ -270,6 +336,10 @@ export default {
         this.problemList = res.data.data
         this.total = this.problemList.length
       })
+    },
+    addD() {
+      this.problem = { questionId: 0, category: '', content: '', optionA: '', optionB: '', optionC: '', optionD: '', answer: '', score: 5 }
+      this.addDialog = true
     },
     deleteD(index) {
       this.index = index

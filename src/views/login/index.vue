@@ -161,7 +161,10 @@ export default {
           age: this.userInfo.age
         }
       }).then(res => {
-        console.log(res)
+        console.log(res.data.msg)
+        if (res.data.code !== 200) {
+          alert(res.data.msg)
+        }
       })
 
       this.userInfo = { userName: '', password: '', gender: '', age: '' }

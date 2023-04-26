@@ -101,13 +101,29 @@
           <el-input v-model="addCase.variety" />
         </el-form-item>
         <el-form-item label="病种" prop="category">
-          <el-input v-model="addCase.category" />
+          <el-select v-model="addCase.category" placeholder="请选择病种" style="width: 100%;">
+            <el-option
+              v-for="item in categories"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="myoption">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="年龄" prop="age">
           <el-input v-model="addCase.age" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
-          <el-input v-model="addCase.sex" />
+          <el-select v-model="addCase.sex" placeholder="请选择性别" style="width: 100%;">
+            <el-option
+              v-for="item in sexes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="myoption">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="免疫" prop="immunity">
           <el-input v-model="addCase.immunity" />
@@ -162,13 +178,29 @@
           <el-input v-model="modifyCase.variety" />
         </el-form-item>
         <el-form-item label="病种" prop="category">
-          <el-input v-model="modifyCase.category" />
+          <el-select v-model="modifyCase.category" placeholder="请选择病种" style="width: 100%;">
+            <el-option
+              v-for="item in categories"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="myoption">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="年龄" prop="age">
           <el-input v-model="modifyCase.age" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
-          <el-input v-model="modifyCase.sex" />
+          <el-select v-model="modifyCase.sex" placeholder="请选择性别" style="width: 100%;">
+            <el-option
+              v-for="item in sexes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              class="myoption">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="免疫" prop="immunity">
           <el-input v-model="modifyCase.immunity" />
@@ -222,10 +254,10 @@
         <el-descriptions-item label="种类">{{ mycase.type }}</el-descriptions-item>
         <el-descriptions-item label="品种">{{ mycase.variety }}</el-descriptions-item>
         <el-descriptions-item label="病种">{{ mycase.category }}</el-descriptions-item>
-        <el-descriptions-item label="年龄">{{ mycase.age }}</el-descriptions-item>
+        <el-descriptions-item label="年龄">{{ mycase.age + '月' }}</el-descriptions-item>
         <el-descriptions-item label="性别">{{ mycase.sex }}</el-descriptions-item>
         <el-descriptions-item label="免疫">{{ mycase.immunity }}</el-descriptions-item>
-        <el-descriptions-item label="体重">{{ mycase.weight }}</el-descriptions-item>
+        <el-descriptions-item label="体重">{{ mycase.weight + 'kg' }}</el-descriptions-item>
         <el-descriptions-item label="接诊状态" :span="16">
           <div>{{ mycase.state }}</div>
           <div v-for="(item, index) in files.state.imageUrls" :key="index" style="display: inline-block">
@@ -255,23 +287,25 @@
             :limit="5"
             :file-list="files.state.uploadImgList"
           >
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadImg('state')">上传到服务器</el-button>
+            <el-button slot="trigger" size="small" type="primary">选取图片</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadImg('state')">上传图片</el-button>
             <el-button style="margin-left: 10px;" size="small" type="primary" @click="deleteImgS">删除图片</el-button>
-            <div slot="tip" class="el-upload__tip">接诊状态图片管理</div>
           </el-upload>
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action
+            :http-request="uploadVdo"
             style="margin-left: 120px; display: inline-block"
-            :auto-upload="false"
             :show-file-list="false"
             :on-change="handleChangeSS"
+            :before-upload="beforeUploadVdo"
+            :on-progress="onProgress"
           >
-            <el-button slot="trigger" size="small" type="primary">上传视频</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadVdo('state')">上传到服务器</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="primary" @click="deleteVdoS">删除视频</el-button>
-            <div slot="tip" class="el-upload__tip">接诊状态视频管理</div>
+            <el-button style="margin-left: 10px;" size="small" type="primary">上传视频</el-button>
           </el-upload>
+          <el-button style="margin-left: 10px;" size="small" type="primary" @click="deleteVdoS">删除视频</el-button>
+          <div v-if="isShowJinDuTiao">
+            <el-progress :text-inside="true" :stroke-width="26" :percentage="curPercentage" ></el-progress>
+          </div>
         </el-descriptions-item>
         <el-descriptions-item label="诊疗过程和方法" :span="16">
           <div>{{ mycase.diagnoseProcess }}</div>
@@ -285,10 +319,6 @@
             </div>
           </div>
           <br>
-          <!--          <div>-->
-          <!--            <xg-player :url="this.files.diagnoseProcess.videoUrl" />-->
-          <!--          </div>-->
-          <!--          <br/>-->
           <el-upload
             style="margin-left: 120px; display: inline-block"
             action="https://jsonplaceholder.typicode.com/posts/"
@@ -302,22 +332,10 @@
             :limit="5"
             :file-list="files.diagnoseProcess.uploadImgList"
           >
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadImg('diagnoseProcess')">上传到服务器</el-button>
+            <el-button slot="trigger" size="small" type="primary">选取图片</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadImg('diagnoseProcess')">上传图片</el-button>
             <el-button style="margin-left: 10px;" size="small" type="primary" @click="deleteImgD">删除图片</el-button>
-            <div slot="tip" class="el-upload__tip">诊疗过程和方法图片管理</div>
           </el-upload>
-          <!--          <el-upload-->
-          <!--            action="https://jsonplaceholder.typicode.com/posts/"-->
-          <!--            style="margin-left: 120px; display: inline-block"-->
-          <!--            :auto-upload="false"-->
-          <!--            :show-file-list="false"-->
-          <!--            :on-change="handleChangeDD"-->
-          <!--          >-->
-          <!--            <el-button slot="trigger" size="small" type="primary">上传视频</el-button>-->
-          <!--            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadVdo('diagnoseProcess')">上传到服务器</el-button>-->
-          <!--            <div slot="tip" class="el-upload__tip">接诊状态视频管理</div>-->
-          <!--          </el-upload>-->
         </el-descriptions-item>
         <el-descriptions-item label="诊断结果" :span="16">
           <div>{{ mycase.result }}</div>
@@ -331,10 +349,6 @@
             </div>
           </div>
           <br>
-          <!--          <div>-->
-          <!--            <xg-player :url="this.files.result.videoUrl" @triggerEvent="triggerEvent" />-->
-          <!--          </div>-->
-          <!--          <br/>-->
           <el-upload
             style="margin-left: 120px; display: inline-block"
             action="https://jsonplaceholder.typicode.com/posts/"
@@ -348,22 +362,10 @@
             :limit="5"
             :file-list="files.result.uploadImgList"
           >
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadImg('result')">上传到服务器</el-button>
+            <el-button slot="trigger" size="small" type="primary">选取图片</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadImg('result')">上传图片</el-button>
             <el-button style="margin-left: 10px;" size="small" type="primary" @click="deleteImgR">删除图片</el-button>
-            <div slot="tip" class="el-upload__tip">诊断结果图片管理</div>
           </el-upload>
-          <!--          <el-upload-->
-          <!--            action="https://jsonplaceholder.typicode.com/posts/"-->
-          <!--            style="margin-left: 120px; display: inline-block"-->
-          <!--            :auto-upload="false"-->
-          <!--            :show-file-list="false"-->
-          <!--            :on-change="handleChangeRR"-->
-          <!--          >-->
-          <!--            <el-button slot="trigger" size="small" type="primary">上传视频</el-button>-->
-          <!--            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadVdo('result')">上传到服务器</el-button>-->
-          <!--            <div slot="tip" class="el-upload__tip">接诊状态视频管理</div>-->
-          <!--          </el-upload>-->
         </el-descriptions-item>
         <el-descriptions-item label="治疗方案" :span="16">
           <div>{{ mycase.treatment }}</div>
@@ -377,10 +379,6 @@
             </div>
           </div>
           <br>
-          <!--          <div>-->
-          <!--            <xg-player :url="this.files.treatment.videoUrl" @triggerEvent="triggerEvent" />-->
-          <!--          </div>-->
-          <!--          <br/>-->
           <el-upload
             style="margin-left: 120px; display: inline-block"
             action="https://jsonplaceholder.typicode.com/posts/"
@@ -394,22 +392,10 @@
             :limit="5"
             :file-list="files.treatment.uploadImgList"
           >
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadImg('treatment')">上传到服务器</el-button>
+            <el-button slot="trigger" size="small" type="primary">选取图片</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadImg('treatment')">上传图片</el-button>
             <el-button style="margin-left: 10px;" size="small" type="primary" @click="deleteImgT">删除图片</el-button>
-            <div slot="tip" class="el-upload__tip">治疗方案图片管理</div>
           </el-upload>
-          <!--          <el-upload-->
-          <!--            action="https://jsonplaceholder.typicode.com/posts/"-->
-          <!--            style="margin-left: 120px; display: inline-block"-->
-          <!--            :auto-upload="false"-->
-          <!--            :show-file-list="false"-->
-          <!--            :on-change="handleChangeTT"-->
-          <!--          >-->
-          <!--            <el-button slot="trigger" size="small" type="primary">上传视频</el-button>-->
-          <!--            <el-button style="margin-left: 10px;" size="small" type="primary" @click="uploadVdo('treatment')">上传到服务器</el-button>-->
-          <!--            <div slot="tip" class="el-upload__tip">接诊状态视频管理</div>-->
-          <!--          </el-upload>-->
         </el-descriptions-item>
       </el-descriptions>
       <el-button type="success" @click="selectCase">返回</el-button>
@@ -432,6 +418,40 @@ export default {
       caseDialog: false,
       addDialog: false,
       modifyDialog: false,
+      isShowJinDuTiao: false,
+      curPercentage: 0,
+      categories: [
+        {
+          value: '犬瘟热',
+          label: '犬瘟热'
+        },
+        {
+          value: '猫感冒',
+          label: '猫感冒'
+        },
+        {
+          value: '鹦鹉热',
+          label: '鹦鹉热'
+        },
+        {
+          value: '猫病毒性鼻气管炎',
+          label: '猫病毒性鼻气管炎'
+        },
+        {
+          value: '猫泛白细胞减少症',
+          label: '猫泛白细胞减少症'
+        }
+      ],
+      sexes: [
+        {
+          value: '雄',
+          label: '雄'
+        },
+        {
+          value: '雌',
+          label: '雌'
+        }
+      ],
       addCase: { patientId: 0, owner: '', address: '', phone: '', petName: '', type: '', variety: '', age: '', sex: '', immunity: '',
         weight: '', category: '', name: '', state: '', diagnoseProcess: '', result: '', treatment: '' },
       modifyCase: { patientId: 0, owner: '', address: '', phone: '', petName: '', type: '', variety: '', age: '', sex: '', immunity: '',
@@ -446,32 +466,31 @@ export default {
           uploadImgList: [],
           uploadImgs: [],
           imageUrls: [],
+          originImgUrls: [],
           uploadVdo: null,
-          videoUrl: null
+          videoUrl: null,
+          orignUrl: null
         },
         diagnoseProcess: {
           selectedImg: null,
           uploadImgList: [],
           uploadImgs: [],
           imageUrls: [],
-          uploadVdo: null,
-          videoUrl: null
+          originImgUrls: []
         },
         result: {
           selectedImg: null,
           uploadImgList: [],
           uploadImgs: [],
           imageUrls: [],
-          uploadVdo: null,
-          videoUrl: null
+          originImgUrls: []
         },
         treatment: {
           selectedImg: null,
           uploadImgList: [],
           uploadImgs: [],
           imageUrls: [],
-          uploadVdo: null,
-          videoUrl: null
+          originImgUrls: []
         }
       },
       mycase: { patientId: 0, owner: '主人a', address: '翻斗大街', phone: '111', petName: 'aaa', type: 'a', variety: 'aa', age: '11', sex: '公', immunity: '百',
@@ -501,8 +520,7 @@ export default {
           { required: true, message: '请输入宠物年龄', trigger: 'blur' }
         ],
         sex: [
-          { required: true, message: '请输入宠物性别', trigger: 'blur' },
-          { min: 1, max: 1, message: '请输入一个字符', trigger: 'blur' }
+          { required: true, message: '请选择宠物性别', trigger: 'blur' }
         ],
         immunity: [
           { required: true, message: '请输入宠物免疫', trigger: 'blur' }
@@ -511,7 +529,7 @@ export default {
           { required: true, message: '请输入宠物重量', trigger: 'blur' }
         ],
         category: [
-          { required: true, message: '请输入病种', trigger: 'blur' }
+          { required: true, message: '请选择病种', trigger: 'blur' }
         ],
         name: [
           { required: true, message: '请输入病例名称', trigger: 'blur' }
@@ -684,7 +702,9 @@ export default {
         }
       }).then(res => {
         this.files.state.imageUrls = []
+        this.files.state.originImgUrls = []
         const path = res.data.data.path
+        this.files.state.originImgUrls = path
         for (let i = 0; i < path.length; i++) {
           this.files.state.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
@@ -702,7 +722,9 @@ export default {
         }
       }).then(res => {
         this.files.diagnoseProcess.imageUrls = []
+        this.files.diagnoseProcess.originImgUrls = []
         const path = res.data.data.path
+        this.files.diagnoseProcess.originImgUrls = path
         for (let i = 0; i < path.length; i++) {
           this.files.diagnoseProcess.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
@@ -720,7 +742,9 @@ export default {
         }
       }).then(res => {
         this.files.result.imageUrls = []
+        this.files.result.originImgUrls = []
         const path = res.data.data.path
+        this.files.result.originImgUrls = path
         for (let i = 0; i < path.length; i++) {
           this.files.result.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
@@ -738,7 +762,9 @@ export default {
         }
       }).then(res => {
         this.files.treatment.imageUrls = []
+        this.files.treatment.originImgUrls = []
         const path = res.data.data.path
+        this.files.treatment.originImgUrls = path
         for (let i = 0; i < path.length; i++) {
           this.files.treatment.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
@@ -807,6 +833,7 @@ export default {
           alert('上传文件出错')
           return
         }
+        alert('图片上传成功')
         this.getImg()
       })
     },
@@ -815,6 +842,7 @@ export default {
     },
     beforeUploadImg(file) {
       const FILE_NAME = file.name
+      console.log(FILE_NAME)
       if (FILE_NAME.substring(FILE_NAME.lastIndexOf('.')) !== '.jpg' && FILE_NAME.substring(FILE_NAME.lastIndexOf('.')) !== '.png') {
         this.$message.warning('仅支持.jpg和.png文件')
         return false
@@ -914,6 +942,7 @@ export default {
         alert('请先选择图片')
         return
       }
+      console.log(this.files.state.originImgUrls[this.files.state.selectedImg])
       axios({
         method: 'post',
         url: 'http://localhost:8084/file/delete',
@@ -922,12 +951,17 @@ export default {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         params: {
-          path: 'D:\\MyGit\\PetHospitalSystem\\petHospitalFiles\\image\\' + this.files.state.imageUrls[this.files.state.selectedImg].substring(this.files.state.imageUrls[this.files.state.selectedImg].lastIndexOf('image') + 6)
+          path: this.files.state.originImgUrls[this.files.state.selectedImg]
         }
       }).then(res => {
         console.log(res.data)
-        this.files.state.selectedImg = null
-        this.getImg()
+        if (res.data.code === 200) {
+          this.files.state.originImgUrls.splice(this.files.state.selectedImg, 1)
+          this.files.state.imageUrls.splice(this.files.state.selectedImg, 1)
+          this.files.state.selectedImg = null
+          this.getImg()
+        }
+        alert(res.data.msg)
       })
     },
     deleteImgD() {
@@ -943,12 +977,17 @@ export default {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         params: {
-          path: 'D:\\MyGit\\PetHospitalSystem\\petHospitalFiles\\image\\' + this.files.diagnoseProcess.imageUrls[this.files.diagnoseProcess.selectedImg].substring(this.files.diagnoseProcess.imageUrls[this.files.diagnoseProcess.selectedImg].lastIndexOf('image') + 6)
+          path: this.files.diagnoseProcess.originImgUrls[this.files.diagnoseProcess.selectedImg]
         }
       }).then(res => {
         console.log(res.data)
-        this.files.diagnoseProcess.selectedImg = null
-        this.getImg()
+        if (res.data.code === 200) {
+          this.files.diagnoseProcess.originImgUrls.splice(this.files.diagnoseProcess.selectedImg, 1)
+          this.files.diagnoseProcess.imageUrls.splice(this.files.diagnoseProcess.selectedImg, 1)
+          this.files.diagnoseProcess.selectedImg = null
+          this.getImg()
+        }
+        alert(res.data.msg)
       })
     },
     deleteImgR() {
@@ -956,6 +995,7 @@ export default {
         alert('请先选择图片')
         return
       }
+      console.log(this.files.result.originImgUrls)
       axios({
         method: 'post',
         url: 'http://localhost:8084/file/delete',
@@ -964,12 +1004,17 @@ export default {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         params: {
-          path: 'D:\\MyGit\\PetHospitalSystem\\petHospitalFiles\\image\\' + this.files.result.imageUrls[this.files.result.selectedImg].substring(this.files.result.imageUrls[this.files.result.selectedImg].lastIndexOf('image') + 6)
+          path: this.files.result.originImgUrls[this.files.result.selectedImg]
         }
       }).then(res => {
         console.log(res.data)
-        this.files.result.selectedImg = null
-        this.getImg()
+        if (res.data.code === 200) {
+          this.files.result.originImgUrls.splice(this.files.result.selectedImg, 1)
+          this.files.result.imageUrls.splice(this.files.result.selectedImg, 1)
+          this.files.result.selectedImg = null
+          this.getImg()
+        }
+        alert(res.data.msg)
       })
     },
     deleteImgT() {
@@ -985,12 +1030,17 @@ export default {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         params: {
-          path: 'D:\\MyGit\\PetHospitalSystem\\petHospitalFiles\\image\\' + this.files.treatment.imageUrls[this.files.treatment.selectedImg].substring(this.files.treatment.imageUrls[this.files.treatment.selectedImg].lastIndexOf('image') + 6)
+          path: this.files.treatment.originImgUrls[this.files.treatment.selectedImg]
         }
       }).then(res => {
         console.log(res.data)
-        this.files.treatment.selectedImg = null
-        this.getImg()
+        if (res.data.code === 200) {
+          this.files.treatment.originImgUrls.splice(this.files.treatment.selectedImg, 1)
+          this.files.treatment.imageUrls.splice(this.files.treatment.selectedImg, 1)
+          this.files.treatment.selectedImg = null
+          this.getImg()
+        }
+        alert(res.data.msg)
       })
     },
     changeListS(index) {
@@ -1021,39 +1071,29 @@ export default {
         this.files.treatment.selectedImg = index
       }
     },
-    uploadVdo(formType) {
-      const FormDatas = new FormData()
-      let uploadVdo = null
-      if (formType === 'state') {
-        uploadVdo = this.files.state.uploadVdo
-      } else if (formType === 'diagnoseProcess') {
-        uploadVdo = this.files.diagnoseProcess.uploadVdo
-      } else if (formType === 'result') {
-        uploadVdo = this.files.result.uploadVdo
-      } else if (formType === 'treatment') {
-        uploadVdo = this.files.treatment.uploadVdo
-      } else {
-        alert('上传文件出错')
-        return
+    sleep(time) {
+      var timeStamp = new Date().getTime()
+      var endTime = timeStamp + time
+      while (true) {
+        if (new Date().getTime() > endTime) {
+          return
+        }
       }
+    },
+    uploadVdo(item) {
+      this.sleep(1000)
+      this.curPercentage = 100
+      console.log(item.file)
+      console.log('------')
+      const FormDatas = new FormData()
+      const uploadVdo = this.files.state.uploadVdo
       if (uploadVdo === null) {
         alert('请先上传视频！')
         return
       }
       FormDatas.append('files', uploadVdo)
       FormDatas.append('patientId', this.mycase.patientId)
-      if (formType === 'state') {
-        FormDatas.append('formType', 'state')
-      } else if (formType === 'diagnoseProcess') {
-        FormDatas.append('formType', 'diagnoseProcess')
-      } else if (formType === 'result') {
-        FormDatas.append('formType', 'result')
-      } else if (formType === 'treatment') {
-        FormDatas.append('formType', 'treatment')
-      } else {
-        alert('上传文件出错')
-        return
-      }
+      FormDatas.append('formType', 'state')
       axios({
         method: 'post',
         url: 'http://localhost:8084/file/uploadMulti',
@@ -1065,20 +1105,29 @@ export default {
         data: FormDatas
       }).then(res => {
         console.log(res.data)
-        if (formType === 'state') {
+        if (res.data[0].code === 200) {
           this.files.state.uploadVdo = null
-        } else if (formType === 'diagnoseProcess') {
-          this.files.diagnoseProcess.uploadVdo = null
-        } else if (formType === 'result') {
-          this.files.result.uploadVdo = null
-        } else if (formType === 'treatment') {
-          this.files.treatment.uploadVdo = null
+          this.getVdo()
+          alert('视频上传成功')
         } else {
-          alert('上传文件出错')
-          return
+          alert(res.data[0].msg)
         }
-        this.getVdo()
+        this.isShowJinDuTiao = false
+        this.curPercentage = 0
       })
+    },
+    beforeUploadVdo() {
+      this.isShowJinDuTiao = true
+    },
+    // 文件上传时的钩子函数,获取上传进度
+    onProgress(event, file, fileList) {
+      const num = ((event.loaded / event.total) * 100) | 0
+      this.curPercentage = num
+      console.log(num)
+      if (this.curPercentage === 100) {
+        this.isShowJinDuTiao = false
+        this.curPercentage = 0
+      }
     },
     getVdo() {
       axios({
@@ -1097,56 +1146,12 @@ export default {
         const path = res.data.data.path
         if (path.length > 0) {
           this.files.state.videoUrl = 'http://localhost:8084/phFiles/video/' + path[0].substring(path[0].lastIndexOf('video') + 6)
+          this.files.state.orignUrl = path[0]
         }
       })
-      // axios({
-      //   method: 'get',
-      //   url: 'http://localhost:8084/file/getVideos',
-      //   timeout: 30000,
-      //   params: {
-      //     patientId: this.mycase.patientId,
-      //     formType: 'diagnoseProcess'
-      //   }
-      // }).then(res => {
-      //   this.files.diagnoseProcess.videoUrl = null
-      //   const path = res.data.data.path
-      //   if (path.length > 0) {
-      //     this.files.diagnoseProcess.videoUrl = 'http://localhost:8084/phFiles/video/' + path[0].substring(path[0].lastIndexOf('video') + 6)
-      //   }
-      // })
-      // axios({
-      //   method: 'get',
-      //   url: 'http://localhost:8084/file/getVideos',
-      //   timeout: 30000,
-      //   params: {
-      //     patientId: this.mycase.patientId,
-      //     formType: 'result'
-      //   }
-      // }).then(res => {
-      //   this.files.result.videoUrl = null
-      //   const path = res.data.data.path
-      //   if (path.length > 0) {
-      //     this.files.result.videoUrl = 'http://localhost:8084/phFiles/video/' + path[0].substring(path[0].lastIndexOf('video') + 6)
-      //   }
-      // })
-      // axios({
-      //   method: 'get',
-      //   url: 'http://localhost:8084/file/getVideos',
-      //   timeout: 30000,
-      //   params: {
-      //     patientId: this.mycase.patientId,
-      //     formType: 'treatment'
-      //   }
-      // }).then(res => {
-      //   this.files.treatment.videoUrl = null
-      //   const path = res.data.data.path
-      //   if (path.length > 0) {
-      //     this.files.treatment.videoUrl = 'http://localhost:8084/phFiles/video/' + path[0].substring(path[0].lastIndexOf('video') + 6)
-      //   }
-      // })
     },
     deleteVdoS() {
-      if (this.files.state.videoUrl === null) {
+      if (this.files.state.orignUrl === null) {
         alert('视频不存在，无法删除！')
         return
       }
@@ -1158,11 +1163,15 @@ export default {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         },
         params: {
-          path: 'D:\\MyGit\\PetHospitalSystem\\petHospitalFiles\\video\\' + this.files.state.videoUrl.substring(this.files.state.videoUrl.lastIndexOf('video') + 6)
+          path: this.files.state.orignUrl
         }
       }).then(res => {
-        console.log(res.data)
-        this.getVdo()
+        if (res.data.code === 200) {
+          this.files.state.videoUrl = null
+          this.files.state.originImgUrls = null
+          this.getVdo()
+        }
+        alert(res.data.msg)
       })
     }
   }
@@ -1202,27 +1211,31 @@ export default {
   /*position: absolute;*/
 }
 
-.selected:before {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  border: 17px solid #4abe84;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
+/*.selected:before {*/
+/*  content: "";*/
+/*  position: absolute;*/
+/*  right: 0;*/
+/*  bottom: 0;*/
+/*  border: 17px solid #4abe84;*/
+/*  border-top-color: transparent;*/
+/*  border-left-color: transparent;*/
+/*}*/
 
-.selected:after {
-  content: "";
-  width: 5px;
-  height: 12px;
-  position: absolute;
-  right: 6px;
-  bottom: 6px;
-  border: 2px solid #fff;
-  border-top-color: transparent;
-  border-left-color: transparent;
-  transform: rotate(45deg);
-}
+/*.selected:after {*/
+/*  content: "";*/
+/*  width: 5px;*/
+/*  height: 12px;*/
+/*  position: absolute;*/
+/*  right: 6px;*/
+/*  bottom: 6px;*/
+/*  border: 2px solid #fff;*/
+/*  border-top-color: transparent;*/
+/*  border-left-color: transparent;*/
+/*  transform: rotate(45deg);*/
+/*}*/
 
+.myoption {
+  width: auto;
+  height: 30px;
+}
 </style>
