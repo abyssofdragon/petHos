@@ -7,6 +7,7 @@ import test from './modules/test'
 import caseManagement from './modules/caseManagement'
 import functionManagement from './modules/functionManagement'
 import study from './modules/study'
+import supplierAllBack from './modules/supplierAllBack'
 
 Vue.use(Router)
 
@@ -93,7 +94,8 @@ export const asyncRoutes = [
     children: [
       functionManagement,
       testManagement,
-      caseManagement
+      caseManagement,
+      supplierAllBack,
     ]
   },
 

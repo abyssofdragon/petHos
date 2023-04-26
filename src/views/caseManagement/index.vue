@@ -275,8 +275,9 @@
           </div>
           <br>
           <el-upload
+            ref="stateUpload"
             style="margin-left: 120px; display: inline-block"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="111"
             multiple
             accept="img/jpg"
             :auto-upload="false"
@@ -295,6 +296,7 @@
             action
             :http-request="uploadVdo"
             style="margin-left: 120px; display: inline-block"
+            accept="video/mp4"
             :show-file-list="false"
             :on-change="handleChangeSS"
             :before-upload="beforeUploadVdo"
@@ -304,7 +306,7 @@
           </el-upload>
           <el-button style="margin-left: 10px;" size="small" type="primary" @click="deleteVdoS">删除视频</el-button>
           <div v-if="isShowJinDuTiao">
-            <el-progress :text-inside="true" :stroke-width="26" :percentage="curPercentage" ></el-progress>
+            <el-progress :text-inside="true" :stroke-width="26" :percentage="curPercentage" status="success" ></el-progress>
           </div>
         </el-descriptions-item>
         <el-descriptions-item label="诊疗过程和方法" :span="16">
@@ -320,6 +322,7 @@
           </div>
           <br>
           <el-upload
+            ref="diaUpload"
             style="margin-left: 120px; display: inline-block"
             action="https://jsonplaceholder.typicode.com/posts/"
             multiple
@@ -350,6 +353,7 @@
           </div>
           <br>
           <el-upload
+            ref="resultUpload"
             style="margin-left: 120px; display: inline-block"
             action="https://jsonplaceholder.typicode.com/posts/"
             multiple
@@ -380,6 +384,7 @@
           </div>
           <br>
           <el-upload
+            ref="treatUpload"
             style="margin-left: 120px; display: inline-block"
             action="https://jsonplaceholder.typicode.com/posts/"
             multiple
@@ -785,6 +790,7 @@ export default {
         alert('上传文件出错')
         return
       }
+      console.log(uploadImgs)
       if (uploadImgs.length === 0) {
         alert('请先上传图片')
         return
@@ -854,6 +860,21 @@ export default {
       this.$message.warning('请上传不超过100M的文件.')
       return false
     },
+    beforeUploadVdo(file) {
+      const FILE_NAME = file.name
+      console.log(FILE_NAME)
+      if (FILE_NAME.substring(FILE_NAME.lastIndexOf('.')) !== '.mp4') {
+        this.$message.warning('仅支持.mp4文件')
+        return false
+      }
+      const isLt100M = file.size / 1024 / 1024 < 100
+      if (isLt100M) {
+        this.isShowJinDuTiao = true
+        return true
+      }
+      this.$message.warning('请上传不超过100M的文件.')
+      return false
+    },
     handleExceed(fileList) {
       this.$message.warning('上传文件数量不超过5.')
     },
@@ -870,44 +891,60 @@ export default {
       this.files.treatment.uploadImgs.splice(this.files.treatment.uploadImgs.indexOf(x => x === file), 1)
     },
     handleChangeS(file, fileList) {
-      const reader = new FileReader()
-      reader.readAsDataURL(file.raw)
-      reader.onload = (e) => {
-        this.files.state.uploadImgList.push({ name: file.raw.name, url: e.target.result })
+      if (this.beforeUploadImg(file)) {
+        const reader = new FileReader()
+        reader.readAsDataURL(file.raw)
+        reader.onload = (e) => {
+          this.files.state.uploadImgList.push({ name: file.raw.name, url: e.target.result })
+        }
+        // state.form.file.push(file.raw);
+        this.files.state.uploadImgs.push(file.raw)
+        fileList = this.files.state.uploadImgList
+      } else {
+        this.$refs.stateUpload.clearFiles()
       }
-      // state.form.file.push(file.raw);
-      this.files.state.uploadImgs.push(file.raw)
-      fileList = this.files.state.uploadImgList
     },
     handleChangeD(file, fileList) {
-      const reader = new FileReader()
-      reader.readAsDataURL(file.raw)
-      reader.onload = (e) => {
-        this.files.diagnoseProcess.uploadImgList.push({ name: file.raw.name, url: e.target.result })
+      if (this.beforeUploadImg(file)) {
+        const reader = new FileReader()
+        reader.readAsDataURL(file.raw)
+        reader.onload = (e) => {
+          this.files.diagnoseProcess.uploadImgList.push({ name: file.raw.name, url: e.target.result })
+        }
+        // state.form.file.push(file.raw);
+        this.files.diagnoseProcess.uploadImgs.push(file.raw)
+        fileList = this.files.diagnoseProcess.uploadImgList
+      } else {
+        this.$refs.diaUpload.clearFiles()
       }
-      // state.form.file.push(file.raw);
-      this.files.diagnoseProcess.uploadImgs.push(file.raw)
-      fileList = this.files.diagnoseProcess.uploadImgList
     },
     handleChangeR(file, fileList) {
-      const reader = new FileReader()
-      reader.readAsDataURL(file.raw)
-      reader.onload = (e) => {
-        this.files.result.uploadImgList.push({ name: file.raw.name, url: e.target.result })
+      if (this.beforeUploadImg(file)) {
+        const reader = new FileReader()
+        reader.readAsDataURL(file.raw)
+        reader.onload = (e) => {
+          this.files.result.uploadImgList.push({ name: file.raw.name, url: e.target.result })
+        }
+        // state.form.file.push(file.raw);
+        this.files.result.uploadImgs.push(file.raw)
+        fileList = this.files.result.uploadImgList
+      } else {
+        this.$refs.resultUpload.clearFiles()
       }
-      // state.form.file.push(file.raw);
-      this.files.result.uploadImgs.push(file.raw)
-      fileList = this.files.result.uploadImgList
     },
     handleChangeT(file, fileList) {
-      const reader = new FileReader()
-      reader.readAsDataURL(file.raw)
-      reader.onload = (e) => {
-        this.files.treatment.uploadImgList.push({ name: file.raw.name, url: e.target.result })
+      if (this.beforeUploadImg(file)) {
+        const reader = new FileReader()
+        reader.readAsDataURL(file.raw)
+        reader.onload = (e) => {
+          this.files.treatment.uploadImgList.push({ name: file.raw.name, url: e.target.result })
+        }
+        // state.form.file.push(file.raw);
+        this.files.treatment.uploadImgs.push(file.raw)
+        fileList = this.files.treatment.uploadImgList
+      } else {
+        this.$refs.treatUpload.clearFiles()
       }
-      // state.form.file.push(file.raw);
-      this.files.treatment.uploadImgs.push(file.raw)
-      fileList = this.files.treatment.uploadImgList
     },
     handleChangeSS(file, fileList) {
       if (this.files.state.videoUrl != null) {
@@ -915,27 +952,6 @@ export default {
         return
       }
       this.files.state.uploadVdo = file.raw
-    },
-    handleChangeDD(file, fileList) {
-      if (this.files.diagnoseProcess.videoUrl != null) {
-        alert('已经存在视频，上传失败！')
-        return
-      }
-      this.files.diagnoseProcess.uploadVdo = file.raw
-    },
-    handleChangeRR(file, fileList) {
-      if (this.files.result.videoUrl != null) {
-        alert('已经存在视频，上传失败！')
-        return
-      }
-      this.files.result.uploadVdo = file.raw
-    },
-    handleChangeTT(file, fileList) {
-      if (this.files.treatment.videoUrl != null) {
-        alert('已经存在视频，上传失败！')
-        return
-      }
-      this.files.treatment.uploadVdo = file.raw
     },
     deleteImgS() {
       if (this.files.state.selectedImg === null) {
@@ -1116,9 +1132,6 @@ export default {
         this.curPercentage = 0
       })
     },
-    beforeUploadVdo() {
-      this.isShowJinDuTiao = true
-    },
     // 文件上传时的钩子函数,获取上传进度
     onProgress(event, file, fileList) {
       const num = ((event.loaded / event.total) * 100) | 0
@@ -1169,7 +1182,10 @@ export default {
         if (res.data.code === 200) {
           this.files.state.videoUrl = null
           this.files.state.originImgUrls = null
-          this.getVdo()
+          this.$router.replace({
+            path: '/admin/supplierAllBack',
+            name: 'supplierAllBack'
+          })
         }
         alert(res.data.msg)
       })

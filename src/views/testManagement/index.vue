@@ -11,7 +11,7 @@
           <el-input
             v-model="categorySearch"
             class="input"
-            placeholder="请输入内容"
+            placeholder="根据病种搜索"
             clearable
           />
           <el-button @click="searchPrbByCtg">筛选病种</el-button>
@@ -20,7 +20,7 @@
           <el-input
             v-model="problemSearch"
             class="input"
-            placeholder="请输入内容"
+            placeholder="根据题目搜索"
             clearable
           />
           <el-button @click="searchPrbByCtn">搜索题目</el-button>
