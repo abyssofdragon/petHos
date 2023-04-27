@@ -10,7 +10,7 @@
           <el-input
             v-model="categorySearch"
             class="input"
-            placeholder="请输入内容"
+            placeholder="根据病种搜索"
             clearable
           />
           <el-button @click="searchByCtg">筛选病种</el-button>
@@ -19,7 +19,7 @@
           <el-input
             v-model="caseSearch"
             class="input"
-            placeholder="请输入内容"
+            placeholder="根据名称搜索"
             clearable
           />
           <el-button @click="searchByCase">搜索病例</el-button>
@@ -91,11 +91,11 @@
         <el-descriptions-item label="体重">{{ mycase.weight }}</el-descriptions-item>
         <el-descriptions-item label="接诊状态" :span="16">
           <div>{{ mycase.state }}</div>
-          <div v-for="(item, index) in files.state.imageUrls" :key="index" style="display: inline-block">
-            <div :class="{ selected: index == files.state.selectedImg }" @click="changeListS(index)">
+          <div v-for="(item, index) in files.state.imageUrls" :key="index" style="display: inline-block;margin-left: 30px;margin-top: 30px">
+            <div>
               <img
                 :src="item"
-                style="width: 100px; height: 100px; padding-top: 5px;"
+                style="width: 400px; height: 400px; padding-top: 5px;"
                 alt
               >
             </div>
@@ -108,11 +108,11 @@
         </el-descriptions-item>
         <el-descriptions-item label="诊疗过程和方法" :span="16">
           <div>{{ mycase.diagnoseProcess }}</div>
-          <div v-for="(item, index) in files.diagnoseProcess.imageUrls" :key="index" style="display: inline-block">
-            <div :class="{ selected: index == files.diagnoseProcess.selectedImg }" @click="changeListD(index)">
+          <div v-for="(item, index) in files.diagnoseProcess.imageUrls" :key="index" style="display: inline-block;margin-left: 30px;margin-top: 30px">
+            <div>
               <img
                 :src="item"
-                style="width: 100px; height: 100px; padding-top: 5px;"
+                style="width: 400px; height: 400px; padding-top: 5px;"
                 alt
               >
             </div>
@@ -121,11 +121,11 @@
         </el-descriptions-item>
         <el-descriptions-item label="诊断结果" :span="16">
           <div>{{ mycase.result }}</div>
-          <div v-for="(item, index) in files.result.imageUrls" :key="index" style="display: inline-block">
-            <div :class="{ selected: index == files.result.selectedImg }" @click="changeListR(index)">
+          <div v-for="(item, index) in files.result.imageUrls" :key="index" style="display: inline-block;margin-left: 30px;margin-top: 30px">
+            <div>
               <img
                 :src="item"
-                style="width: 100px; height: 100px; padding-top: 5px;"
+                style="width: 400px; height: 400px; padding-top: 5px;"
                 alt
               >
             </div>
@@ -134,11 +134,11 @@
         </el-descriptions-item>
         <el-descriptions-item label="治疗方案" :span="16">
           <div>{{ mycase.treatment }}</div>
-          <div v-for="(item, index) in files.treatment.imageUrls" :key="index" style="display: inline-block">
-            <div :class="{ selected: index == files.treatment.selectedImg }" @click="changeListT(index)">
+          <div v-for="(item, index) in files.treatment.imageUrls" :key="index" style="display: inline-block;margin-left: 30px;margin-top: 30px">
+            <div>
               <img
                 :src="item"
-                style="width: 100px; height: 100px; padding-top: 5px;"
+                style="width: 400px; height: 400px; padding-top: 5px;"
                 alt
               >
             </div>
