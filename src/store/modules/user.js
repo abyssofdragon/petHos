@@ -40,10 +40,11 @@ const actions = {
       login({ userName: username.trim(), password: password }).then(response => {
         const { data } = response
         console.log(111, data)
-        localStorage.setItem('token', data.Authorization)
+        console.log(data.data.Authorization)
+        localStorage.setItem('token', data.data.Authorization)
         localStorage.setItem('role', 'admin')
-        commit('SET_TOKEN', data.Authorization)
-        setToken(data.Authorization)
+        commit('SET_TOKEN', data.data.Authorization)
+        setToken(data.data.Authorization)
         // commit('SET_NAME', username)
         commit('SET_AVATAR', 'http://erkong.ybc365.com/7ffac20210331212345427.jpeg')
         resolve()

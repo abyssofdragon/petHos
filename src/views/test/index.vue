@@ -153,7 +153,7 @@ export default {
       let oo
       axios({
         method: 'post',
-        url: 'http://localhost:8084/question/generate',
+        url: 'http://124.222.60.144:8084/question/generate',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -208,7 +208,7 @@ export default {
 
       axios({
         method: 'post',
-        url: 'http://localhost:8084/question/score',
+        url: 'http://124.222.60.144:8084/question/score',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')

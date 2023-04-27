@@ -214,7 +214,7 @@ export default {
     getAllCase() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/patient/all',
+        url: 'http://124.222.60.144:8084/patient/all',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -228,7 +228,7 @@ export default {
       console.log(this.caseSearch)
       axios({
         method: 'get',
-        url: 'http://localhost:8084/patient/searchByName',
+        url: 'http://124.222.60.144:8084/patient/searchByName',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -245,7 +245,7 @@ export default {
     searchByCtg() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/patient/searchByCategory',
+        url: 'http://124.222.60.144:8084/patient/searchByCategory',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -274,7 +274,7 @@ export default {
     getImg() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getImages',
+        url: 'http://124.222.60.144:8084/file/getImages',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -287,12 +287,12 @@ export default {
         this.files.state.imageUrls = []
         const path = res.data.data.path
         for (let i = 0; i < path.length; i++) {
-          this.files.state.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
+          this.files.state.imageUrls.push('http://124.222.60.144:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
       })
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getImages',
+        url: 'http://124.222.60.144:8084/file/getImages',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -305,12 +305,12 @@ export default {
         this.files.diagnoseProcess.imageUrls = []
         const path = res.data.data.path
         for (let i = 0; i < path.length; i++) {
-          this.files.diagnoseProcess.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
+          this.files.diagnoseProcess.imageUrls.push('http://124.222.60.144:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
       })
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getImages',
+        url: 'http://124.222.60.144:8084/file/getImages',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -323,12 +323,12 @@ export default {
         this.files.result.imageUrls = []
         const path = res.data.data.path
         for (let i = 0; i < path.length; i++) {
-          this.files.result.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
+          this.files.result.imageUrls.push('http://124.222.60.144:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
       })
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getImages',
+        url: 'http://124.222.60.144:8084/file/getImages',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -341,7 +341,7 @@ export default {
         this.files.treatment.imageUrls = []
         const path = res.data.data.path
         for (let i = 0; i < path.length; i++) {
-          this.files.treatment.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
+          this.files.treatment.imageUrls.push('http://124.222.60.144:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
       })
     },
@@ -351,7 +351,7 @@ export default {
     getVdo() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getVideos',
+        url: 'http://124.222.60.144:8084/file/getVideos',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -364,7 +364,7 @@ export default {
         this.files.state.videoUrl = null
         const path = res.data.data.path
         if (path.length > 0) {
-          this.files.state.videoUrl = 'http://localhost:8084/phFiles/video/' + path[0].substring(path[0].lastIndexOf('video') + 6)
+          this.files.state.videoUrl = 'http://124.222.60.144:8084/phFiles/video/' + path[0].substring(path[0].lastIndexOf('video') + 6)
         }
       })
     }

@@ -561,7 +561,7 @@ export default {
     getAllCase() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/patient/all',
+        url: 'http://124.222.60.144:8084/patient/all',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -575,7 +575,7 @@ export default {
       console.log(this.caseSearch)
       axios({
         method: 'get',
-        url: 'http://localhost:8084/patient/searchByName',
+        url: 'http://124.222.60.144:8084/patient/searchByName',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -592,7 +592,7 @@ export default {
     searchByCtg() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/patient/searchByCategory',
+        url: 'http://124.222.60.144:8084/patient/searchByCategory',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -619,7 +619,7 @@ export default {
       // this.caseList.splice(this.index, 1)
       axios({
         method: 'delete',
-        url: 'http://localhost:8084/patient/delete/' + this.caseIndex,
+        url: 'http://124.222.60.144:8084/patient/delete/' + this.caseIndex,
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -638,7 +638,7 @@ export default {
         if (valid) {
           axios({
             method: 'put',
-            url: 'http://localhost:8084/patient/update',
+            url: 'http://124.222.60.144:8084/patient/update',
             timeout: 30000,
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -663,7 +663,7 @@ export default {
         if (valid) {
           axios({
             method: 'post',
-            url: 'http://localhost:8084/patient/add',
+            url: 'http://124.222.60.144:8084/patient/add',
             timeout: 30000,
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -699,7 +699,7 @@ export default {
     getImg() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getImages',
+        url: 'http://124.222.60.144:8084/file/getImages',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -714,12 +714,12 @@ export default {
         const path = res.data.data.path
         this.files.state.originImgUrls = path
         for (let i = 0; i < path.length; i++) {
-          this.files.state.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
+          this.files.state.imageUrls.push('http://124.222.60.144:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
       })
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getImages',
+        url: 'http://124.222.60.144:8084/file/getImages',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -734,12 +734,12 @@ export default {
         const path = res.data.data.path
         this.files.diagnoseProcess.originImgUrls = path
         for (let i = 0; i < path.length; i++) {
-          this.files.diagnoseProcess.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
+          this.files.diagnoseProcess.imageUrls.push('http://124.222.60.144:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
       })
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getImages',
+        url: 'http://124.222.60.144:8084/file/getImages',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -754,12 +754,12 @@ export default {
         const path = res.data.data.path
         this.files.result.originImgUrls = path
         for (let i = 0; i < path.length; i++) {
-          this.files.result.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
+          this.files.result.imageUrls.push('http://124.222.60.144:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
       })
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getImages',
+        url: 'http://124.222.60.144:8084/file/getImages',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -774,7 +774,7 @@ export default {
         const path = res.data.data.path
         this.files.treatment.originImgUrls = path
         for (let i = 0; i < path.length; i++) {
-          this.files.treatment.imageUrls.push('http://localhost:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
+          this.files.treatment.imageUrls.push('http://124.222.60.144:8084/phFiles/image/' + path[i].substring(path[i].lastIndexOf('image') + 6))
         }
       })
     },
@@ -816,7 +816,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: 'http://localhost:8084/file/uploadMulti',
+        url: 'http://124.222.60.144:8084/file/uploadMulti',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -961,7 +961,7 @@ export default {
       console.log(this.files.state.originImgUrls[this.files.state.selectedImg])
       axios({
         method: 'post',
-        url: 'http://localhost:8084/file/delete',
+        url: 'http://124.222.60.144:8084/file/delete',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -989,7 +989,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: 'http://localhost:8084/file/delete',
+        url: 'http://124.222.60.144:8084/file/delete',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -1018,7 +1018,7 @@ export default {
       console.log(this.files.result.originImgUrls)
       axios({
         method: 'post',
-        url: 'http://localhost:8084/file/delete',
+        url: 'http://124.222.60.144:8084/file/delete',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -1046,7 +1046,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: 'http://localhost:8084/file/delete',
+        url: 'http://124.222.60.144:8084/file/delete',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -1120,7 +1120,7 @@ export default {
       FormDatas.append('formType', 'state')
       axios({
         method: 'post',
-        url: 'http://localhost:8084/file/uploadMulti',
+        url: 'http://124.222.60.144:8084/file/uploadMulti',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -1153,7 +1153,7 @@ export default {
     getVdo() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/file/getVideos',
+        url: 'http://124.222.60.144:8084/file/getVideos',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -1166,7 +1166,7 @@ export default {
         this.files.state.videoUrl = null
         const path = res.data.data.path
         if (path.length > 0) {
-          this.files.state.videoUrl = 'http://localhost:8084/phFiles/video/' + path[0].substring(path[0].lastIndexOf('video') + 6)
+          this.files.state.videoUrl = 'http://124.222.60.144:8084/phFiles/video/' + path[0].substring(path[0].lastIndexOf('video') + 6)
           this.files.state.orignUrl = path[0]
         }
       })
@@ -1178,7 +1178,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: 'http://localhost:8084/file/delete',
+        url: 'http://124.222.60.144:8084/file/delete',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')

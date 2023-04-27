@@ -315,7 +315,7 @@ export default {
     getAllProblem() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/question/all',
+        url: 'http://124.222.60.144:8084/question/all',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -329,7 +329,7 @@ export default {
     searchPrbByCtn() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/question/searchByContent',
+        url: 'http://124.222.60.144:8084/question/searchByContent',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -346,7 +346,7 @@ export default {
     searchPrbByCtg() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/question/searchByCategory',
+        url: 'http://124.222.60.144:8084/question/searchByCategory',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -380,7 +380,7 @@ export default {
         if (valid) {
           axios({
             method: 'put',
-            url: 'http://localhost:8084/question/update',
+            url: 'http://124.222.60.144:8084/question/update',
             timeout: 30000,
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -404,7 +404,7 @@ export default {
       // this.problemList.splice(this.index, 1)
       axios({
         method: 'delete',
-        url: 'http://localhost:8084/question/delete/' + this.index,
+        url: 'http://124.222.60.144:8084/question/delete/' + this.index,
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -424,7 +424,7 @@ export default {
         if (valid) {
           axios({
             method: 'post',
-            url: 'http://localhost:8084/question/add',
+            url: 'http://124.222.60.144:8084/question/add',
             timeout: 30000,
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token')

@@ -152,7 +152,7 @@ export default {
     handleRegister() {
       axios({
         method: 'post',
-        url: 'http://localhost:8084/user/register',
+        url: 'http://124.222.60.144:8084/user/register',
         timeout: 30000,
         params: {
           userName: this.userInfo.userName,
