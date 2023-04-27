@@ -23,8 +23,10 @@
       <vxe-column field="authority" title="用户权限" type="html" :formatter="formatterAuthority" :filters="[{label: '实习生', value: 1}, {label: '管理员', value: 3}, {label: '超级管理员', value: 5}]" :filter-multiple="false" />
       <vxe-column title="操作" width="100" show-overflow>
         <template #default="{ row }">
-          <vxe-button type="text" icon="vxe-icon-edit" @click="editEvent(row)" />
-          <vxe-button type="text" icon="vxe-icon-delete" @click="removeEvent(row)" />
+          <vxe-button v-if="row.authority === 5" type="text" icon="vxe-icon-edit" disabled />
+          <vxe-button v-else type="text" icon="vxe-icon-edit" @click="editEvent(row)" />
+          <vxe-button v-if="row.authority === 5" type="text" icon="vxe-icon-delete" disabled />
+          <vxe-button v-else type="text" icon="vxe-icon-delete" @click="removeEvent(row)" />
         </template>
       </vxe-column>
       <template #empty>
@@ -78,7 +80,7 @@
           </vxe-form-item>
           <vxe-form-item align="center" title-align="left" :span="24">
             <template #default>
-              <vxe-button type="submit">提交</vxe-button>
+              <vxe-button type="submit" @click="putUpdate">提交</vxe-button>
               <vxe-button type="reset">重置</vxe-button>
             </template>
           </vxe-form-item>
@@ -134,29 +136,44 @@ export default {
     getUserAll() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/user/getAll',
+        url: 'http://124.222.60.144:8084/user/getAll',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
         // data: FormDatas
       }).then(res => {
-        this.result = res.data
-        console.log(111, this.result)
-        this.tablePage.totalResult = this.result.length
-        this.display = this.result.slice((this.tablePage.currentPage - 1) * this.tablePage.pageSize, this.tablePage.currentPage * this.tablePage.pageSize)
+        this.initialTableData = res.data
+        this.tablePage.totalResult = this.initialTableData.length
+        this.display = this.initialTableData.slice((this.tablePage.currentPage - 1) * this.tablePage.pageSize, this.tablePage.currentPage * this.tablePage.pageSize)
       })
     },
-    postDrugAdd() {
-      const data = this.formData
+    delete(row) {
       axios({
-        method: 'post',
-        url: 'http://localhost:8084/drug/add',
+        method: 'delete',
+        url: 'http://124.222.60.144:8084/user/delete/' + row.userId,
         timeout: 30000,
-        data
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
         // data: FormDatas
       }).then(res => {
-        this.getDrugAll()
+        this.getUserAll()
+      })
+    },
+    putUpdate() {
+      const data = this.formData
+      console.log(1111, data)
+      axios({
+        method: 'post',
+        url: 'http://124.222.60.144:8084/user/updateInfo?id=' + data.id + '&userName=' + data.userName + '&authority=' + data.authority + '&gender=' + data.gender + '&age=' + data.age,
+        timeout: 30000,
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+        // data: FormDatas
+      }).then(res => {
+        this.getUserAll()
       })
     },
     formatterAuthority({ cellValue }) {
@@ -171,10 +188,21 @@ export default {
     },
     editEvent(row) {
       this.formData = {
-        authority: row.authority
+        age: row.age,
+        authority: row.authority,
+        gender: row.gender,
+        id: row.userId,
+        userName: row.userName
       }
       this.selectRow = row
       this.showEdit = true
+    },
+    async removeEvent(row) {
+      const type = await VXETable.modal.confirm('您确定要删除该数据?')
+      if (type === 'confirm') {
+        // $table.remove(row)
+        this.delete(row)
+      }
     },
     submitEvent() {
       this.submitLoading = true
@@ -183,7 +211,10 @@ export default {
         this.showEdit = false
         if (this.selectRow) {
           VXETable.modal.message({ content: '保存成功', status: 'success' })
-          Object.assign(this.selectRow, this.formData)
+          // Object.assign(this.selectRow, this.formData)
+        } else {
+          VXETable.modal.message({ content: '新增成功', status: 'success' })
+          // $table.insert(this.formData)
         }
       }, 500)
     },
@@ -192,7 +223,7 @@ export default {
       const filterName = XEUtils.toValueString(this.filterName1).trim().toLowerCase()
       if (filterName) {
         const filterRE = new RegExp(filterName, 'gi')
-        const searchProps = ['name']
+        const searchProps = ['userName']
         const rest = this.initialTableData.filter(item => searchProps.some(key => XEUtils.toValueString(item[key]).toLowerCase().indexOf(filterName) > -1))
         this.list = rest.map(row => {
           const item = Object.assign({}, row)

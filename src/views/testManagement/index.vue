@@ -42,8 +42,8 @@
           label="病种"
           width="180"
         />
-<!--          :filters="categoryFilter"-->
-<!--          :filter-method="filterType"-->
+        <!--          :filters="categoryFilter"-->
+        <!--          :filter-method="filterType"-->
 
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -114,8 +114,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="myoption">
-            </el-option>
+              class="myoption"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="题目" prop="content">
@@ -140,8 +140,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="myoption">
-            </el-option>
+              class="myoption"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -164,8 +164,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="myoption">
-            </el-option>
+              class="myoption"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="题目" prop="content">
@@ -190,8 +190,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="myoption">
-            </el-option>
+              class="myoption"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>

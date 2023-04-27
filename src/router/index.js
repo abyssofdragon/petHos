@@ -97,7 +97,7 @@ export const asyncRoutes = [
       functionManagement,
       testManagement,
       caseManagement,
-      supplierAllBack,
+      supplierAllBack
     ]
   },
 

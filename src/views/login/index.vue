@@ -43,7 +43,7 @@
 
       <el-button :loading="loading" type="primary" style="width:30%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
       <el-button type="primary" style="width:30%;margin-bottom:30px;float: right" @click="registerDialog = true">注册</el-button>
-<!-- 
+      <!--
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
@@ -57,7 +57,7 @@
     >
       <el-form ref="form" :model="userInfo" label-width="80px" class="registerD">
         <el-form-item style="color: black" label="用户名">
-          <el-input style="color: black" v-model="userInfo.userName" />
+          <el-input v-model="userInfo.userName" style="color: black" />
         </el-form-item>
         <el-form-item label="密码">
           <el-input v-model="userInfo.password" show-password />

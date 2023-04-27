@@ -107,8 +107,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="myoption">
-            </el-option>
+              class="myoption"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="年龄" prop="age">
@@ -121,8 +121,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="myoption">
-            </el-option>
+              class="myoption"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="免疫" prop="immunity">
@@ -184,8 +184,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="myoption">
-            </el-option>
+              class="myoption"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="年龄" prop="age">
@@ -198,8 +198,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-              class="myoption">
-            </el-option>
+              class="myoption"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="免疫" prop="immunity">
@@ -306,7 +306,7 @@
           </el-upload>
           <el-button style="margin-left: 10px;" size="small" type="primary" @click="deleteVdoS">删除视频</el-button>
           <div v-if="isShowJinDuTiao">
-            <el-progress :text-inside="true" :stroke-width="26" :percentage="curPercentage" status="success" ></el-progress>
+            <el-progress :text-inside="true" :stroke-width="26" :percentage="curPercentage" status="success" />
           </div>
         </el-descriptions-item>
         <el-descriptions-item label="诊疗过程和方法" :span="16">
