@@ -160,7 +160,7 @@ export default {
     getDrugAll() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/drug/all',
+        url: 'http://124.222.60.144:8084/drug/all',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -176,7 +176,7 @@ export default {
       const data = this.formData
       axios({
         method: 'put',
-        url: 'http://localhost:8084/drug/update',
+        url: 'http://124.222.60.144:8084/drug/update',
         timeout: 30000,
         data,
         headers: {
@@ -191,7 +191,7 @@ export default {
       const data = this.formData
       axios({
         method: 'post',
-        url: 'http://localhost:8084/drug/add',
+        url: 'http://124.222.60.144:8084/drug/add',
         timeout: 30000,
         data,
         headers: {
@@ -205,7 +205,7 @@ export default {
     deleteDrugDelete(row) {
       axios({
         method: 'delete',
-        url: 'http://localhost:8084/drug/delete/' + row.drugId,
+        url: 'http://124.222.60.144:8084/drug/delete/' + row.drugId,
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -218,7 +218,7 @@ export default {
     getDrugSearchByName() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/drug/searchByName/?drugName=' + this.filterName,
+        url: 'http://124.222.60.144:8084/drug/searchByName/?drugName=' + this.filterName,
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')

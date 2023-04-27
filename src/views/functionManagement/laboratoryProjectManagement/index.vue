@@ -151,7 +151,7 @@ export default {
     getAll() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/testItem/all',
+        url: 'http://124.222.60.144:8084/testItem/all',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -167,7 +167,7 @@ export default {
       const data = this.formData
       axios({
         method: 'put',
-        url: 'http://localhost:8084/testItem/update',
+        url: 'http://124.222.60.144:8084/testItem/update',
         timeout: 30000,
         data,
         headers: {
@@ -182,7 +182,7 @@ export default {
       const data = this.formData
       axios({
         method: 'post',
-        url: 'http://localhost:8084/testItem/add',
+        url: 'http://124.222.60.144:8084/testItem/add',
         timeout: 30000,
         data,
         headers: {
@@ -196,7 +196,7 @@ export default {
     deleteDelete(row) {
       axios({
         method: 'delete',
-        url: 'http://localhost:8084/testItem/delete/' + row.testItemId,
+        url: 'http://124.222.60.144:8084/testItem/delete/' + row.testItemId,
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -209,7 +209,7 @@ export default {
     getSearchByName() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/testItem/searchByName/?testItemName=' + this.filterName,
+        url: 'http://124.222.60.144124.222.60.144:8084/testItem/searchByName/?testItemName=' + this.filterName,
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
