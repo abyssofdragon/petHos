@@ -55,7 +55,7 @@ export default {
     getAll() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/user/me',
+        url: 'http://124.222.60.144:8084/user/me',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')

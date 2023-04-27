@@ -74,7 +74,7 @@ export default {
               longitude: -0.5,
               latitude: -0.28,
               tooltip: '前台 <b>点击查看详细信息</b>',
-              content: '工作内容：<br>1：接待顾客引导服务。<br>2：来电接听，预约安排。售后通知，疫苗客户提醒及会员顾客。<br>3：病案例建立档案与查找。<br>4：核查宠物入院，出院，付费等手续是否完整。<br>5：前台收银及销售报表的制作并分析用品销售情况。<br>6：维持前台秩序，保持卫生清洁，整洁和安全模范工作。<br>7：提醒员工打卡，并做好监督记录。<br> 	<meta name="referrer" content="no-referrer" />  <!--可以让img标签预加载网络图片--><imp src="https://pic.616pic.com/ys_img/01/17/72/QEv91KRGrD.jpg"></img>'
+              content: '工作内容：<br>1：接待顾客引导服务。<br>2：来电接听，预约安排。售后通知，疫苗客户提醒及会员顾客。<br>3：病案例建立档案与查找。<br>4：核查宠物入院，出院，付费等手续是否完整。<br>5：前台收银及销售报表的制作并分析用品销售情况。<br>6：维持前台秩序，保持卫生清洁，整洁和安全模范工作。<br>7：提醒员工打卡，并做好监督记录。<br> <img src="https://pic.616pic.com/ys_img/01/17/72/QEv91KRGrD.jpg"></img>'
             }
           ]
         }]
@@ -238,7 +238,7 @@ export default {
               longitude: 0,
               latitude: -0.28,
               tooltip: '前台操作',
-              content: '<h1>前台操作指南<h1><iframe width="560" height="315" src="//player.bilibili.com/player.html?aid=720101433&bvid=BV19Q4y1Y7Rj&cid=396468535&page=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
+              content: '<h1>前台操作指南<h1><iframe width="560" height="315" src="//player.bilibili.com/player.html?aid=720101433&bvid=BV19Q4y1Y7Rj&cid=396468535&page=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> <p>下面有张图</p><img src="https://pic.616pic.com/ys_img/01/17/72/QEv91KRGrD.jpg"></img>'
             }]),
           this.viewer.animate({
             zoom: 50,
@@ -428,7 +428,7 @@ export default {
               longitude: -0.5,
               latitude: -0.28,
               tooltip: '前台 <b>点击查看详细信息</b>',
-              content: '工作内容：<br>1：接待顾客引导服务。<br>2：来电接听，预约安排。售后通知，疫苗客户提醒及会员顾客。<br>3：病案例建立档案与查找。<br>4：核查宠物入院，出院，付费等手续是否完整。<br>5：前台收银及销售报表的制作并分析用品销售情况。<br>6：维持前台秩序，保持卫生清洁，整洁和安全模范工作。<br>7：提醒员工打卡，并做好监督记录。<br> 	<meta name="referrer" content="no-referrer" />  <!--可以让img标签预加载网络图片--><imp src="https://pic.616pic.com/ys_img/01/17/72/QEv91KRGrD.jpg"></img>'
+              content: '工作内容：<br>1：接待顾客引导服务。<br>2：来电接听，预约安排。售后通知，疫苗客户提醒及会员顾客。<br> 3：病案例建立档案与查找。<br> 4：核查宠物入院，出院，付费等手续是否完整。<br>5：前台收银及销售报表的制作并分析用品销售情况。<br>6：维持前台秩序，保持卫生清洁，整洁和安全模范工作。<br>7：提醒员工打卡，并做好监督记录。<br> <img src="https://pic.616pic.com/ys_img/01/17/72/QEv91KRGrD.jpg"></img>'
             }
             ]),
           this.viewer.animate({

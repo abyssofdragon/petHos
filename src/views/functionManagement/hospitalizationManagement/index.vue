@@ -145,7 +145,7 @@ export default {
     getAll() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/hospitalization/all',
+        url: 'http://124.222.60.144:8084/hospitalization/all',
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -161,7 +161,7 @@ export default {
       const data = this.formData
       axios({
         method: 'put',
-        url: 'http://localhost:8084/hospitalization/update',
+        url: 'http://124.222.60.144:8084/hospitalization/update',
         timeout: 30000,
         data,
         headers: {
@@ -176,7 +176,7 @@ export default {
       const data = this.formData
       axios({
         method: 'post',
-        url: 'http://localhost:8084/hospitalization/add',
+        url: 'http://124.222.60.144:8084/hospitalization/add',
         timeout: 30000,
         data,
         headers: {
@@ -190,7 +190,7 @@ export default {
     delete(row) {
       axios({
         method: 'delete',
-        url: 'http://localhost:8084/hospitalization/delete/' + row.hospitalizationId,
+        url: 'http://124.222.60.144:8084/hospitalization/delete/' + row.hospitalizationId,
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -203,7 +203,7 @@ export default {
     getSearchByName() {
       axios({
         method: 'get',
-        url: 'http://localhost:8084/hospitalization/searchByName/?patientName=' + this.filterName,
+        url: 'http://124.222.60.144:8084/hospitalization/searchByName/?patientName=' + this.filterName,
         timeout: 30000,
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
