@@ -64,6 +64,7 @@ export const constantRoutes = [
     meta: {
       title: '实习生',
       icon: 'nested',
+      breadcrumb: false,
       roles: ['user', 'admin', 'superAdmin']
     },
     children: [
@@ -89,6 +90,7 @@ export const asyncRoutes = [
     meta: {
       title: '管理员',
       icon: 'nested',
+      breadcrumb: false,
       roles: ['admin', 'superadmin']
     },
     children: [
@@ -106,6 +108,7 @@ export const asyncRoutes = [
     name: 'SuperAdmin',
     meta: {
       title: '超级管理员',
+      breadcrumb: false,
       icon: 'nested',
       roles: ['superadmin']
     },

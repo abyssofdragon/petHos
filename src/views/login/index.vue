@@ -43,11 +43,11 @@
 
       <el-button :loading="loading" type="primary" style="width:30%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
       <el-button type="primary" style="width:30%;margin-bottom:30px;float: right" @click="registerDialog = true">注册</el-button>
-
+<!-- 
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
-      </div>
+      </div> -->
 
     </el-form>
     <el-dialog
@@ -93,15 +93,15 @@ export default {
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 1) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('请输入密码'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'test3',
-        password: 'test3'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -231,14 +231,19 @@ $light_gray:#eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+  background:url("./login.jpg")center center no-repeat;
+  background-size:100% 100%;
 
   .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
+    border:1px solid #dccfcf;
+  width: 520px;
+  margin:180px auto;
+  padding: 35px 80px 15px 35px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  box-shadow: 0 0 25px #909399;
+  background-color:rgba(255,255,255,0.3);
   }
 
   .tips {
