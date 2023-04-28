@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">登录页面</h3>
       </div>
 
       <el-form-item prop="username">
@@ -54,19 +54,20 @@
       title="注册用户"
       :visible.sync="registerDialog"
       width="30%"
+      style="background-color: black"
     >
-      <el-form ref="form" :model="userInfo" label-width="80px" class="registerD">
-        <el-form-item style="color: black" label="用户名">
+      <el-form ref="regform" :model="userInfo" label-width="80px" :rules="rules">
+        <el-form-item style="color: black" label="用户名" prop="userName">
           <el-input v-model="userInfo.userName" style="color: black" />
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input v-model="userInfo.password" show-password />
         </el-form-item>
-        <el-form-item label="性别">
+        <el-form-item label="性别" prop="gender">
           <el-input v-model="userInfo.gender" />
         </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="userInfo.age" />
+        <el-form-item label="年龄" prop="age">
+          <el-input v-model.number="userInfo.age" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -106,6 +107,21 @@ export default {
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+      },
+      rules: {
+        userName: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        age: [
+          { required: true, message: '请输入年龄', trigger: 'blur' },
+          { required: true, type: 'number', message: '年龄为数字', trigger: 'blur' }
+        ],
+        gender: [
+          { required: true, message: '请输入性别', trigger: 'blur' }
+        ]
       },
       loading: false,
       passwordType: 'password',
@@ -150,25 +166,31 @@ export default {
       })
     },
     handleRegister() {
-      axios({
-        method: 'post',
-        url: 'http://124.222.60.144:8084/user/register',
-        timeout: 30000,
-        params: {
-          userName: this.userInfo.userName,
-          password: this.userInfo.password,
-          gender: this.userInfo.gender,
-          age: this.userInfo.age
-        }
-      }).then(res => {
-        console.log(res.data.msg)
-        if (res.data.code !== 200) {
-          alert(res.data.msg)
+      this.$refs['regform'].validate((valid) => {
+        if (valid) {
+          axios({
+            method: 'post',
+            url: 'http://124.222.60.144:8084/user/register',
+            timeout: 30000,
+            params: {
+              userName: this.userInfo.userName,
+              password: this.userInfo.password,
+              gender: this.userInfo.gender,
+              age: this.userInfo.age
+            }
+          }).then(res => {
+            console.log(res.data.msg)
+            if (res.data.code !== 200) {
+              alert(res.data.msg)
+            }
+          })
+
+          this.userInfo = { userName: '', password: '', gender: '', age: '' }
+          this.registerDialog = false
+        } else {
+          console.log('error submit!!')
         }
       })
-
-      this.userInfo = { userName: '', password: '', gender: '', age: '' }
-      this.registerDialog = false
     }
   }
 }
@@ -243,7 +265,7 @@ $light_gray:#eee;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   box-shadow: 0 0 25px #909399;
-  background-color:rgba(255,255,255,0.3);
+  background-color:rgba(0,0,0,0.6);
   }
 
   .tips {
@@ -287,5 +309,9 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
+}
+
+.el-input__inner {
+  background-color: #1482f0;
 }
 </style>
