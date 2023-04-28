@@ -79,7 +79,7 @@
     <el-dialog
       title="增加病例"
       :visible.sync="addDialog"
-      width="60%"
+      width="500px"
     >
       <el-form ref="addform" :model="addCase" :rules="rules" label-width="120px">
         <el-form-item label="主人" prop="owner">
@@ -156,7 +156,7 @@
     <el-dialog
       title="修改病例"
       :visible.sync="modifyDialog"
-      width="60%"
+      width="500px"
     >
       <el-form ref="modifyform" :model="modifyCase" :rules="rules" label-width="120px">
         <el-form-item label="主人" prop="owner">
@@ -233,7 +233,7 @@
     <el-dialog
       title="警告"
       :visible.sync="caseDialog"
-      width="30%"
+      width="400px"
     >
       <span>是否确认删除病例?</span>
       <span slot="footer" class="dialog-footer">

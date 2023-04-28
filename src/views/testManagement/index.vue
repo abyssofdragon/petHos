@@ -104,7 +104,7 @@
     <el-dialog
       title="修改试题"
       :visible.sync="modifyDialog"
-      width="30%"
+      width="400px"
     >
       <el-form ref="modifyform" :model="problem" :rules="rules" label-width="80px">
         <el-form-item label="病种" prop="category">
@@ -154,7 +154,7 @@
     <el-dialog
       title="增加试题"
       :visible.sync="addDialog"
-      width="30%"
+      width="400px"
     >
       <el-form ref="addform" :model="problem" :rules="rules" label-width="80px">
         <el-form-item label="病种" prop="category">
@@ -204,7 +204,7 @@
     <el-dialog
       title="警告"
       :visible.sync="deleteDialog"
-      width="30%"
+      width="400px"
     >
       <span>是否确认删除试题?</span>
       <span slot="footer" class="dialog-footer">
@@ -375,6 +375,10 @@ export default {
     },
     modifyProblem() {
       const data = this.problem
+      if (data.optionA === data.optionB || data.optionA === data.optionC || data.optionA === data.optionD || data.optionB === data.optionC || data.optionB === data.optionD || data.optionC === data.optionD) {
+        this.$message.error('选项不能重复')
+        return
+      }
       // this.problemList[this.index] = this.problem
       this.$refs['modifyform'].validate((valid) => {
         if (valid) {
@@ -420,6 +424,10 @@ export default {
       // this.problem.id = this.problemList[this.problemList.length - 1].id + 1
       // this.problemList.push(this.problem)
       const data = this.problem
+      if (data.optionA === data.optionB || data.optionA === data.optionC || data.optionA === data.optionD || data.optionB === data.optionC || data.optionB === data.optionD || data.optionC === data.optionD) {
+        this.$message.error('选项不能重复')
+        return
+      }
       this.$refs['addform'].validate((valid) => {
         if (valid) {
           axios({

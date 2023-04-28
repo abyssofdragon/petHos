@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">登录页面</h3>
+        <h3 class="title">登录</h3>
       </div>
 
       <el-form-item prop="username">
@@ -53,7 +53,7 @@
     <el-dialog
       title="注册用户"
       :visible.sync="registerDialog"
-      width="30%"
+      width="400px"
       style="background-color: black"
     >
       <el-form ref="regform" :model="userInfo" label-width="80px" :rules="rules">
