@@ -150,7 +150,7 @@ export default {
     },
     delete(row) {
       axios({
-        method: 'delete',
+        method: 'post',
         url: 'http://124.222.60.144:8084/user/delete/' + row.userId,
         timeout: 30000,
         headers: {
